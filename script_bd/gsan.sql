@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-05-2023 a las 14:15:31
+-- Tiempo de generación: 07-05-2023 a las 16:20:35
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.1.17
 
@@ -32,6 +32,14 @@ CREATE TABLE `barrios` (
   `descripcion` varchar(35) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Volcado de datos para la tabla `barrios`
+--
+
+INSERT INTO `barrios` (`barrioId`, `descripcion`) VALUES
+(1, 'San Juan'),
+(2, 'Ciudad Nueva');
+
 -- --------------------------------------------------------
 
 --
@@ -43,6 +51,13 @@ CREATE TABLE `ciudades` (
   `descripcion` varchar(35) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Volcado de datos para la tabla `ciudades`
+--
+
+INSERT INTO `ciudades` (`ciudadId`, `descripcion`) VALUES
+(1, 'Ciudad del Este');
+
 -- --------------------------------------------------------
 
 --
@@ -52,19 +67,27 @@ CREATE TABLE `ciudades` (
 CREATE TABLE `pacientes` (
   `pacienteId` int(11) NOT NULL,
   `nombre` varchar(35) NOT NULL,
-  `apellido` int(35) NOT NULL,
+  `apellido` varchar(35) NOT NULL,
   `ci` varchar(10) NOT NULL,
   `fechaNac` date NOT NULL,
   `sexo` varchar(1) NOT NULL,
-  `sangre` int(11) DEFAULT NULL,
+  `sangre` varchar(3) DEFAULT NULL,
   `barrioId` int(11) DEFAULT NULL,
   `ciudadId` int(11) DEFAULT NULL,
-  `direccion` varchar(45) DEFAULT NULL,
+  `direccion` varchar(50) DEFAULT NULL,
   `telefono` varchar(10) NOT NULL,
   `fechaReg` date DEFAULT current_timestamp(),
   `ultTurno` date DEFAULT NULL,
   `usuarioId` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Volcado de datos para la tabla `pacientes`
+--
+
+INSERT INTO `pacientes` (`pacienteId`, `nombre`, `apellido`, `ci`, `fechaNac`, `sexo`, `sangre`, `barrioId`, `ciudadId`, `direccion`, `telefono`, `fechaReg`, `ultTurno`, `usuarioId`) VALUES
+(1, 'Juan', 'Perez', '5300653', '2001-10-14', 'M', 'RH', 1, 1, 'Calle Univesidad Nacional del Este - km 8 Acaray', '0983115720', '2023-05-07', NULL, 1),
+(2, 'Maria', 'Ojeda', '5532532', '2003-06-07', 'F', 'A', 2, 1, 'Avenida Adrian Jara - Calle Boqueron', '0981532341', '2023-05-07', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -78,6 +101,13 @@ CREATE TABLE `usuarios` (
   `codigo` int(11) DEFAULT NULL,
   `permisos` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Volcado de datos para la tabla `usuarios`
+--
+
+INSERT INTO `usuarios` (`usuarioId`, `usuario`, `codigo`, `permisos`) VALUES
+(1, 'Admin', 256, 5);
 
 --
 -- Índices para tablas volcadas
@@ -120,25 +150,25 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `barrios`
 --
 ALTER TABLE `barrios`
-  MODIFY `barrioId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `barrioId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `ciudades`
 --
 ALTER TABLE `ciudades`
-  MODIFY `ciudadId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ciudadId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `pacientes`
 --
 ALTER TABLE `pacientes`
-  MODIFY `pacienteId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `pacienteId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `usuarioId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `usuarioId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Restricciones para tablas volcadas
