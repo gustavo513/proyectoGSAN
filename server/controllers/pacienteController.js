@@ -1,4 +1,4 @@
-import {pool} from '../db/db.js';
+import {pool} from '../database/database.js';
 
 export const getPaciente = async(req, res) => {
     try{
@@ -53,7 +53,7 @@ export const updatePaciente = async(req, res) => {
     try{
         const id = req.params.id;
         const {nombre, apellido, ci, fechaNac, sexo, sangre, barrioId, ciudadId, direccion, telefono} = req.body;
-        const result = await pool.query('UPDATE pacientes SET ? WHERE pacienteid = ?', [ {nombre, apellido, ci, fechaNac, sexo, sangre, barrioId, ciudadId, direccion, telefono}, pacienteid]);
+        const result = await pool.query('UPDATE pacientes SET ? WHERE pacienteid = ?', [ {nombre, apellido, ci, fechaNac, sexo, sangre, barrioId, ciudadId, direccion, telefono}, id]);
         res.json(result);
     }
     catch(error){
