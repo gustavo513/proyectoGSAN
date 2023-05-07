@@ -18,7 +18,7 @@ export const getPaciente = async(req, res) => {
 
 export const getPacientes = async(req, res) => {
     try{
-        const [result] = await pool.query('SELECT * FROM pacientes ORDER BY pacienteid ASC');
+        const [result] = await pool.query('SELECT pacienteid, nombre, apellido, ci, fechaNac, sexo, sangre, b.descripcion AS barrio, c.descripcion AS ciudad, telefono, fechaReg, ultTurno, usuarioId FROM pacientes p JOIN ciudades c ON (p.ciudadid = c.ciudadid) JOIN barrios b ON (p.barrioid = b.barrioid) ORDER BY pacienteid ASC');
         res.json(result);
     }
     catch(error){
