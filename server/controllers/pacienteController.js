@@ -3,7 +3,7 @@ import {pool} from '../database/database.js';
 export const getPaciente = async(req, res) => {
     try{
         const id = req.params.id;
-        const [result] = await pool.query('SELECT pacienteid, nombre, apellido, ci, fechaNac, sexo, sangre, b.descripcion AS barrio, c.descripcion AS ciudad, telefono, fechaReg, ultTurno, usuarioId  FROM pacientes p JOIN ciudades c ON (p.ciudadid = c.ciudadid) JOIN barrios b ON (p.barrioid = b.barrioid) WHERE pacienteid = ?', [id]);
+        const [result] = await pool.query('SELECT pacienteid, nombre, apellido, ci, fechaNac, sexo, sangre, b.descripcion AS barrio, c.descripcion AS ciudad, telefono, direccion, fechaReg, ultTurno, usuarioId  FROM pacientes p JOIN ciudades c ON (p.ciudadid = c.ciudadid) JOIN barrios b ON (p.barrioid = b.barrioid) WHERE pacienteid = ?', [id]);
         if(result.length == 0){
             return res.status(404).json( {message: 'Registro de paciente no encontrado...'} );
         }
@@ -18,7 +18,7 @@ export const getPaciente = async(req, res) => {
 
 export const getPacientes = async(req, res) => {
     try{
-        const [result] = await pool.query('SELECT pacienteid, nombre, apellido, ci, fechaNac, sexo, sangre, b.descripcion AS barrio, c.descripcion AS ciudad, telefono, fechaReg, ultTurno, usuarioId FROM pacientes p JOIN ciudades c ON (p.ciudadid = c.ciudadid) JOIN barrios b ON (p.barrioid = b.barrioid) ORDER BY pacienteid ASC');
+        const [result] = await pool.query('SELECT pacienteid, nombre, apellido, ci, fechaNac, sexo, sangre, b.descripcion AS barrio, c.descripcion AS ciudad, direccion, telefono, fechaReg, ultTurno, usuarioId FROM pacientes p JOIN ciudades c ON (p.ciudadid = c.ciudadid) JOIN barrios b ON (p.barrioid = b.barrioid) ORDER BY pacienteid ASC');
         res.json(result);
     }
     catch(error){
