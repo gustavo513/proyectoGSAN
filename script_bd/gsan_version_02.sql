@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 07-05-2023 a las 16:20:35
--- Versión del servidor: 10.4.28-MariaDB
--- Versión de PHP: 8.1.17
+-- Host: localhost
+-- Generation Time: May 11, 2023 at 02:41 AM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `gsan`
+-- Database: `gsan`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `barrios`
+-- Table structure for table `barrios`
 --
 
 CREATE TABLE `barrios` (
@@ -33,7 +33,7 @@ CREATE TABLE `barrios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Volcado de datos para la tabla `barrios`
+-- Dumping data for table `barrios`
 --
 
 INSERT INTO `barrios` (`barrioId`, `descripcion`) VALUES
@@ -43,7 +43,7 @@ INSERT INTO `barrios` (`barrioId`, `descripcion`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `ciudades`
+-- Table structure for table `ciudades`
 --
 
 CREATE TABLE `ciudades` (
@@ -52,16 +52,57 @@ CREATE TABLE `ciudades` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Volcado de datos para la tabla `ciudades`
+-- Dumping data for table `ciudades`
 --
 
 INSERT INTO `ciudades` (`ciudadId`, `descripcion`) VALUES
-(1, 'Ciudad del Este');
+(1, 'Ciudad del Este'),
+(2, 'Minga Guazu');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `pacientes`
+-- Table structure for table `especialidades`
+--
+
+CREATE TABLE `especialidades` (
+  `especialidadid` int(11) NOT NULL,
+  `descripcion` varchar(35) NOT NULL,
+  `estado` varchar(1) DEFAULT 'D'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `especialidades`
+--
+
+INSERT INTO `especialidades` (`especialidadid`, `descripcion`, `estado`) VALUES
+(1, 'Neurologia', 'D');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `horarios`
+--
+
+CREATE TABLE `horarios` (
+  `horarioid` int(11) NOT NULL,
+  `dia` int(1) NOT NULL,
+  `desde` time NOT NULL,
+  `hasta` time NOT NULL,
+  `estado` varchar(1) DEFAULT 'D'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `horarios`
+--
+
+INSERT INTO `horarios` (`horarioid`, `dia`, `desde`, `hasta`, `estado`) VALUES
+(1, 2, '07:00:00', '15:00:00', 'D');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pacientes`
 --
 
 CREATE TABLE `pacientes` (
@@ -82,7 +123,7 @@ CREATE TABLE `pacientes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Volcado de datos para la tabla `pacientes`
+-- Dumping data for table `pacientes`
 --
 
 INSERT INTO `pacientes` (`pacienteId`, `nombre`, `apellido`, `ci`, `fechaNac`, `sexo`, `sangre`, `barrioId`, `ciudadId`, `direccion`, `telefono`, `fechaReg`, `ultTurno`, `usuarioId`) VALUES
@@ -92,7 +133,7 @@ INSERT INTO `pacientes` (`pacienteId`, `nombre`, `apellido`, `ci`, `fechaNac`, `
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `usuarios`
+-- Table structure for table `usuarios`
 --
 
 CREATE TABLE `usuarios` (
@@ -103,30 +144,44 @@ CREATE TABLE `usuarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Volcado de datos para la tabla `usuarios`
+-- Dumping data for table `usuarios`
 --
 
 INSERT INTO `usuarios` (`usuarioId`, `usuario`, `codigo`, `permisos`) VALUES
-(1, 'Admin', 256, 5);
+(1, 'Admin', 256, 5),
+(2, 'Marcos', 344, 2),
+(3, 'Marcos', 234, 2);
 
 --
--- Índices para tablas volcadas
+-- Indexes for dumped tables
 --
 
 --
--- Indices de la tabla `barrios`
+-- Indexes for table `barrios`
 --
 ALTER TABLE `barrios`
   ADD PRIMARY KEY (`barrioId`);
 
 --
--- Indices de la tabla `ciudades`
+-- Indexes for table `ciudades`
 --
 ALTER TABLE `ciudades`
   ADD PRIMARY KEY (`ciudadId`);
 
 --
--- Indices de la tabla `pacientes`
+-- Indexes for table `especialidades`
+--
+ALTER TABLE `especialidades`
+  ADD PRIMARY KEY (`especialidadid`);
+
+--
+-- Indexes for table `horarios`
+--
+ALTER TABLE `horarios`
+  ADD PRIMARY KEY (`horarioid`);
+
+--
+-- Indexes for table `pacientes`
 --
 ALTER TABLE `pacientes`
   ADD PRIMARY KEY (`pacienteId`),
@@ -136,46 +191,58 @@ ALTER TABLE `pacientes`
   ADD KEY `barrioId` (`barrioId`);
 
 --
--- Indices de la tabla `usuarios`
+-- Indexes for table `usuarios`
 --
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`usuarioId`),
   ADD UNIQUE KEY `codigo` (`codigo`);
 
 --
--- AUTO_INCREMENT de las tablas volcadas
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT de la tabla `barrios`
+-- AUTO_INCREMENT for table `barrios`
 --
 ALTER TABLE `barrios`
   MODIFY `barrioId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT de la tabla `ciudades`
+-- AUTO_INCREMENT for table `ciudades`
 --
 ALTER TABLE `ciudades`
-  MODIFY `ciudadId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ciudadId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT de la tabla `pacientes`
+-- AUTO_INCREMENT for table `especialidades`
+--
+ALTER TABLE `especialidades`
+  MODIFY `especialidadid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `horarios`
+--
+ALTER TABLE `horarios`
+  MODIFY `horarioid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `pacientes`
 --
 ALTER TABLE `pacientes`
   MODIFY `pacienteId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT de la tabla `usuarios`
+-- AUTO_INCREMENT for table `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `usuarioId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `usuarioId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- Restricciones para tablas volcadas
+-- Constraints for dumped tables
 --
 
 --
--- Filtros para la tabla `pacientes`
+-- Constraints for table `pacientes`
 --
 ALTER TABLE `pacientes`
   ADD CONSTRAINT `pacientes_ibfk_1` FOREIGN KEY (`usuarioId`) REFERENCES `usuarios` (`usuarioId`),
