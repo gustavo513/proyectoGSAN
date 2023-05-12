@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-05-2023 a las 16:20:35
+-- Tiempo de generación: 12-05-2023 a las 03:22:46
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.1.17
 
@@ -38,7 +38,8 @@ CREATE TABLE `barrios` (
 
 INSERT INTO `barrios` (`barrioId`, `descripcion`) VALUES
 (1, 'San Juan'),
-(2, 'Ciudad Nueva');
+(2, 'Ciudad Nueva'),
+(3, 'Area 1');
 
 -- --------------------------------------------------------
 
@@ -56,7 +57,8 @@ CREATE TABLE `ciudades` (
 --
 
 INSERT INTO `ciudades` (`ciudadId`, `descripcion`) VALUES
-(1, 'Ciudad del Este');
+(1, 'Ciudad del Este'),
+(2, 'Pdte. Franco');
 
 -- --------------------------------------------------------
 
@@ -87,7 +89,32 @@ CREATE TABLE `pacientes` (
 
 INSERT INTO `pacientes` (`pacienteId`, `nombre`, `apellido`, `ci`, `fechaNac`, `sexo`, `sangre`, `barrioId`, `ciudadId`, `direccion`, `telefono`, `fechaReg`, `ultTurno`, `usuarioId`) VALUES
 (1, 'Juan', 'Perez', '5300653', '2001-10-14', 'M', 'RH', 1, 1, 'Calle Univesidad Nacional del Este - km 8 Acaray', '0983115720', '2023-05-07', NULL, 1),
-(2, 'Maria', 'Ojeda', '5532532', '2003-06-07', 'F', 'A', 2, 1, 'Avenida Adrian Jara - Calle Boqueron', '0981532341', '2023-05-07', NULL, 1);
+(2, 'Maria', 'Ojeda', '5532532', '2003-06-07', 'F', 'A', 2, 1, 'Avenida Adrian Jara - Calle Boqueron', '0981532341', '2023-05-07', NULL, 1),
+(6, 'Benjamin', 'Abraham', '5312432', '2023-01-01', 'M', 'A', 1, 1, 'Calle Av. Peru', '0983115252', '2023-05-11', NULL, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `turnos`
+--
+
+CREATE TABLE `turnos` (
+  `id` int(11) NOT NULL,
+  `fecha` date DEFAULT current_timestamp(),
+  `hora` int(11) NOT NULL,
+  `estado` varchar(1) DEFAULT 'P',
+  `total` int(11) NOT NULL,
+  `pacienteid` int(11) NOT NULL,
+  `medicoid` int(11) NOT NULL,
+  `usuarioid` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Volcado de datos para la tabla `turnos`
+--
+
+INSERT INTO `turnos` (`id`, `fecha`, `hora`, `estado`, `total`, `pacienteid`, `medicoid`, `usuarioid`) VALUES
+(3, NULL, 1, NULL, 100000, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -107,7 +134,8 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`usuarioId`, `usuario`, `codigo`, `permisos`) VALUES
-(1, 'Admin', 256, 5);
+(1, 'Admin', 256, 5),
+(2, 'Recepcion', 404, 5);
 
 --
 -- Índices para tablas volcadas
@@ -136,6 +164,12 @@ ALTER TABLE `pacientes`
   ADD KEY `barrioId` (`barrioId`);
 
 --
+-- Indices de la tabla `turnos`
+--
+ALTER TABLE `turnos`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
@@ -150,25 +184,31 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `barrios`
 --
 ALTER TABLE `barrios`
-  MODIFY `barrioId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `barrioId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `ciudades`
 --
 ALTER TABLE `ciudades`
-  MODIFY `ciudadId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ciudadId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `pacientes`
 --
 ALTER TABLE `pacientes`
-  MODIFY `pacienteId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `pacienteId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de la tabla `turnos`
+--
+ALTER TABLE `turnos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `usuarioId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `usuarioId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Restricciones para tablas volcadas
