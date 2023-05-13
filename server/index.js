@@ -5,6 +5,7 @@ import ciudadesRoute from './routes/ciudadRoute.js';
 import barriosRoute from './routes/barrioRoute.js';
 import usuariosRoute from './routes/usuarioRoute.js';
 import turnoRoute from './routes/turnoRoute.js';
+import medicoRoute from './routes/medicoRoute.js';
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(ciudadesRoute);
 app.use(barriosRoute);
 app.use(usuariosRoute);
 app.use(turnoRoute);
+app.use(medicoRoute);
 
 app.listen(PORT);
 console.log(`El servidor se esta ejecutando en el puerto ${PORT}`);
