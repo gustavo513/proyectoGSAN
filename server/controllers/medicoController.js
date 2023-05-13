@@ -3,7 +3,7 @@ import {pool} from '../database/database.js';
 export const getMedico = async(req, res) => {
     try{
         const id = req.params.id;
-        const [result] = await pool.query('SELECT * FROM medicos m WHERE medicoid = ?', [id]);
+        const [result] = await pool.query('SELECT * FROM medicos m WHERE medicoId = ?', [id]);
         if(result.length == 0){
             return res.status(404).json( {message: 'Registro de medico no encontrado...'} );
         }
@@ -18,7 +18,7 @@ export const getMedico = async(req, res) => {
 
 export const getMedicos = async(req, res) => {
     try{
-        const [result] = await pool.query('SELECT * FROM medicos m ORDER BY pacienteid ASC');
+        const [result] = await pool.query('SELECT * FROM medicos m ORDER BY medicoId ASC');
         res.json(result);
     }
     catch(error){
@@ -29,7 +29,7 @@ export const getMedicos = async(req, res) => {
 export const createMedico = async(req, res) => {
     try{
         const {nombre, apellido, ci, fechaNac, telefono, direccion, intervConsulta, estado, especialidadId, usuarioId} = req.body;
-        const result = await pool.query('INSERT INTO medicos SET ?', {nombre:nombre, apellido:apellido, ci:ci, fechaNac:fechaNac, telefono:telefono, direccion:direccion, intervConsulta:intervConsulta, estado:estado, especialidadId:especialidadId, usuarioId:usuarioId});
+        const result = await pool.query('INSERT INTO medicos SET ?', {nombre:nombre, apellido:apellido, ci:ci, fechaNac:fechaNac, telefono:telefono, direccion:direccion, intervConsulta:intervConsulta, especialidadId:especialidadId, usuarioId:usuarioId});
         res.json({
             nombre,
             apellido,
@@ -52,7 +52,7 @@ export const updateMedico = async(req, res) => {
     try{
         const id = req.params.id;
         const {nombre, apellido, ci, fechaNac, telefono, direccion, intervConsulta, estado, especialidadId} = req.body;
-        const result = await pool.query('UPDATE medicos SET ? WHERE medicoid = ?', [ {nombre, apellido, ci, fechaNac, telefono, direccion, intervConsulta, estado, especialidadId}, id]);
+        const result = await pool.query('UPDATE medicos SET ? WHERE medicoId = ?', [ {nombre, apellido, ci, fechaNac, telefono, direccion, intervConsulta, estado, especialidadId}, id]);
         res.json(result);
     }
     catch(error){
