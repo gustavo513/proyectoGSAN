@@ -18,7 +18,7 @@ export const getTurno = async(req, res) => {
 
 export const getTurnos = async(req, res) => {
     try{
-        const [result] = await pool.query('SELECT * FROM turnos ORDER BY turnoid ASC');
+        const [result] = await pool.query('SELECT turnoId, fecha, hora, t.estado, total, t.fechaReg, p.nombre AS nombrePaciente, p.apellido AS apellidoPaciente, p.ci, m.nombre AS nombreMedico, m.apellido AS apellidoMedico, e.descripcion, usuario FROM turnos t JOIN pacientes p ON (t.pacienteId = p.pacienteId) JOIN medicos m ON (t.medicoId = p.pacienteId) JOIN usuarios u ON (t.usuarioId = u.usuarioId) JOIN especialidades e ON (m.especialidadId = e.especialidadId) ORDER BY turnoid ASC');
         res.json(result);
     }
     catch(error){
