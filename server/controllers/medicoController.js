@@ -29,7 +29,7 @@ export const getMedicos = async(req, res) => {
 export const getMedicosByEspecialidadId = async(req, res) => {
     try{
         const especialidadId = req.params.especialidadId;
-        const [result] = await pool.query('SELECT medicoId, nombre, apellido, intervConsulta, estado FROM medicos m WHERE especialidadId = ?', [especialidadId]);
+        const [result] = await pool.query('SELECT medicoId, nombre, apellido, estado FROM medicos m WHERE especialidadId = ?', [especialidadId]);
         res.json(result);
     }
     catch(error){
