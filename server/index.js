@@ -7,7 +7,7 @@ import medicosRoute from './routes/medicoRoute.js';
 import usuariosRoute from './routes/usuarioRoute.js';
 import turnoRoute from './routes/turnoRoute.js';
 import horariosRoute from './routes/horarioRoute.js';
-import horarioMedicoRoute from './routes/horarioMedicoRoute.js';
+import horariosMedicosRoute from './routes/horarioMedicoRoute.js';
 import especialidadesRoute from './routes/especialidadRoute.js';
 
 const app = express();
@@ -22,7 +22,7 @@ app.use(medicosRoute);
 app.use(usuariosRoute);
 app.use(turnoRoute);
 app.use(horariosRoute);
-app.use(horarioMedicoRoute);
+app.use(horariosMedicosRoute);
 app.use(especialidadesRoute);
 
 app.listen(PORT);

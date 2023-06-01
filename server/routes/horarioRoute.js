@@ -4,14 +4,14 @@ import { getHorarios, getHorario, postHorario, putHorario, deleteHorario  } from
 
 const router = Router();
 
-router.get("/horario", getHorarios);
+router.get("/horarios", getHorarios);
 
-router.get("/horario/:id", getHorario);
+router.get("/horarios/:id", getHorario);
 
-router.post("/horario", postHorario);
+router.post("/horarios", postHorario);
 
-router.put("/horario/:id", putHorario);
+router.put("/horarios/:id", putHorario);
 
-router.delete("/horario/:id", deleteHorario);
+router.delete("/horarios/:id", deleteHorario);
 
 export default router;

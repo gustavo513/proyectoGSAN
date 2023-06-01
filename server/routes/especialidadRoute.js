@@ -2,14 +2,14 @@ import { Router } from "express";
 import { getEspecialidades, getEspecialidad, createEspecialidad, updateEspecialidad, deleteEspecialidad } from "../controllers/especialidadController.js";
 const router = Router();
 
-router.get("/especialidad", getEspecialidades);
+router.get("/especialidades", getEspecialidades);
 
-router.get("/especialidad/:id", getEspecialidad);
+router.get("/especialidades/:id", getEspecialidad);
 
-router.post("/especialidad", createEspecialidad);
+router.post("/especialidades", createEspecialidad);
 
-router.put("/especialidad/:id", updateEspecialidad);
+router.put("/especialidades/:id", updateEspecialidad);
 
-router.delete("/especialidad/:id", deleteEspecialidad);
+router.delete("/especialidades/:id", deleteEspecialidad);
 
 export default router;
