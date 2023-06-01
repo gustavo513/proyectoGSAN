@@ -2,6 +2,7 @@ import {Router} from 'express';
 import {
     getHorarioMedico,
     getHorariosMedicos,
+    getHorariosMedicosByMedicoId,
     createHorarioMedico,
     updateHorarioMedico,
     deleteHorarioMedico
@@ -14,6 +15,9 @@ router.get('/horariosmedicos/:id', getHorarioMedico);
 
 //listar todos los horarios medicos
 router.get('/horariosmedicos', getHorariosMedicos);
+
+//listar todos los horarios medicos de un solo medico
+router.get('/horariosmedicos/gethorariosmedicosbymedicoid/:medicoId', getHorariosMedicosByMedicoId);
 
 //registrar un horario medico
 router.post('/horariosmedicos', createHorarioMedico);

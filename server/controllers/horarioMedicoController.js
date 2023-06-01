@@ -26,6 +26,17 @@ export const getHorariosMedicos = async(req, res) => {
     }
 }
 
+export const getHorariosMedicosByMedicoId = async(req, res) => {
+    try{
+        const medicoId = req.params.medicoId;
+        const [result] = await pool.query('SELECT horarioMedicoId, hm.medicoId, hm.horarioId, dia, desde, hasta, intervConsulta FROM horariosmedicos hm JOIN horarios h ON (hm.horarioId = h.horarioId) JOIN medicos m ON (hm.medicoId = m.medicoId) WHERE hm.medicoId = ?', [medicoId]);
+        res.json(result);
+    }
+    catch(error){
+        return res.status(500).json( {message: error.message} );
+    }
+}
+
 export const createHorarioMedico = async(req, res) => {
     try{
         const {horarioId, medicoId} = req.body;
