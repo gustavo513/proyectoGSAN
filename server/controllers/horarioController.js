@@ -1,19 +1,5 @@
 import { pool } from "../database/database.js";
 
-export const getHorarios = async(req, res) => {
-    
-    try {
-        
-        const [resulado] = await pool.query('SELECT * FROM horarios');
-        res.json(resulado);
-
-
-    } catch (error) {
-        return  res.status(500).json( {message: error.message} );
-    }
-
-}
-
 export const getHorario = async(req, res) => {
     
 
@@ -31,6 +17,20 @@ export const getHorario = async(req, res) => {
 
     } catch (error) {
         return res.status(500).json( {message: error.message} );
+    }
+
+}
+
+export const getHorarios = async(req, res) => {
+    
+    try {
+        
+        const [resulado] = await pool.query('SELECT * FROM horarios ORDER BY horarioId ASC');
+        res.json(resulado);
+
+
+    } catch (error) {
+        return  res.status(500).json( {message: error.message} );
     }
 
 }

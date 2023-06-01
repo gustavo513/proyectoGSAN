@@ -1,18 +1,5 @@
 import { pool } from "../database/database.js";
 
-export const getEspecialidades = async(req, res) => {
-   
-    try {
-        
-        const [resultado] = await pool.query('SELECT * FROM especialidades');
-        res.json(resultado);
-
-    } catch (error) {
-        return  res.status(500).json( {message: error.message} );
-    }
-    
-}
-
 export const getEspecialidad = async(req, res) => {
     
     try {
@@ -31,6 +18,19 @@ export const getEspecialidad = async(req, res) => {
         return res.status(500).json( {message: error.message} );
     }
 
+}
+
+export const getEspecialidades = async(req, res) => {
+   
+    try {
+        
+        const [resultado] = await pool.query('SELECT * FROM especialidades ORDER BY especialidadId ASC');
+        res.json(resultado);
+
+    } catch (error) {
+        return  res.status(500).json( {message: error.message} );
+    }
+    
 }
 
 export const createEspecialidad = async(req, res) => {
