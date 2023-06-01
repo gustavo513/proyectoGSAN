@@ -3,7 +3,7 @@ import {pool} from '../database/database.js';
 export const getMedico = async(req, res) => {
     try{
         const id = req.params.id;
-        const [result] = await pool.query('SELECT medicoId, nombre, apellido, ci, fechaNac, telefono, direccion, intervConsulta, m.estado, e.descripcion, usuarioId FROM medicos m JOIN especialidades e ON (m.especialidadId = e.especialidadId) WHERE medicoId = ?', [id]);
+        const [result] = await pool.query('SELECT medicoId, nombre, apellido, ci, fechaNac, telefono, direccion, intervConsulta, m.estado, e.descripcion AS especialidad, usuarioId FROM medicos m JOIN especialidades e ON (m.especialidadId = e.especialidadId) WHERE medicoId = ?', [id]);
         if(result.length == 0){
             return res.status(404).json( {message: 'Registro de medico no encontrado...'} );
         }
@@ -18,7 +18,18 @@ export const getMedico = async(req, res) => {
 
 export const getMedicos = async(req, res) => {
     try{
-        const [result] = await pool.query('SELECT medicoId, nombre, apellido, ci, fechaNac, telefono, direccion, intervConsulta, m.estado, e.descripcion, usuarioId FROM medicos m JOIN especialidades e ON (m.especialidadId = e.especialidadId) ORDER BY medicoId ASC');
+        const [result] = await pool.query('SELECT medicoId, nombre, apellido, ci, fechaNac, telefono, direccion, intervConsulta, m.estado, e.descripcion AS especialidad, usuarioId FROM medicos m JOIN especialidades e ON (m.especialidadId = e.especialidadId) ORDER BY medicoId ASC');
+        res.json(result);
+    }
+    catch(error){
+        return res.status(500).json( {message: error.message} );
+    }
+}
+
+export const getMedicosByEspecialidadId = async(req, res) => {
+    try{
+        const especialidadId = req.params.especialidadId;
+        const [result] = await pool.query('SELECT medicoId, nombre, apellido, intervConsulta, estado FROM medicos m WHERE especialidadId = ?', [especialidadId]);
         res.json(result);
     }
     catch(error){
