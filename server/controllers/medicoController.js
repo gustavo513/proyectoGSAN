@@ -3,7 +3,7 @@ import {pool} from '../database/database.js';
 export const getMedico = async(req, res) => {
     try{
         const id = req.params.id;
-        const [result] = await pool.query('SELECT medicoId, nombre, apellido, ci, fechaNac, telefono, direccion, intervConsulta, m.estado, e.descripcion AS especialidad, usuarioId FROM medicos m JOIN especialidades e ON (m.especialidadId = e.especialidadId) WHERE medicoId = ?', [id]);
+        const [result] = await pool.query('SELECT medicoId, nombre, apellido, ci, fechaNac, telefono, direccion, intervConsulta, e.especialidadId, m.estado, e.descripcion AS especialidad, usuarioId FROM medicos m JOIN especialidades e ON (m.especialidadId = e.especialidadId) WHERE medicoId = ?', [id]);
         if(result.length == 0){
             return res.status(404).json( {message: 'Registro de medico no encontrado...'} );
         }
