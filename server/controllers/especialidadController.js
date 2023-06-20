@@ -11,7 +11,7 @@ export const getEspecialidad = async(req, res) => {
         if(resultado.length === 0){
             return res.status(404).json({message: 'Registro de especialidad no encontrado'});
         }else{
-            res.json(resultado[0]); 
+            res.json(resultado); 
         }
 
     } catch (error) {

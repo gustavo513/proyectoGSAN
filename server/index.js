@@ -1,5 +1,6 @@
 import express from 'express';
 import {PORT} from './config.js';
+import cors from 'cors';
 import pacientesRoute from './routes/pacienteRoute.js';
 import ciudadesRoute from './routes/ciudadRoute.js';
 import barriosRoute from './routes/barrioRoute.js';
@@ -11,6 +12,8 @@ import especialidadesRoute from './routes/especialidadRoute.js';
 
 const app = express();
 
+//Permite que el servidor reciba peticiones desde otro origen
+app.use(cors());
 //procesa los datos del cliente en formato json
 app.use(express.json());
 
