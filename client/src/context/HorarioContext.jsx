@@ -3,7 +3,8 @@ import {
     ListarHorariosRequest,
     ListarHorarioRequest,
     ActualizarHorarioRequest,
-    EliminarHorarioRequest
+    EliminarHorarioRequest,
+    HorariosPorDiaRequest
 } from '../api/horario.api.js';
 import { createContext, useContext, useState } from 'react';
 
@@ -66,8 +67,17 @@ import { createContext, useContext, useState } from 'react';
             setHorarios(horarios.filter(horario => horario.horarioId  !== id));
         }
 
+        const HorariosPorDia = async(id)=>{
+            try {
+                const response = await HorariosPorDiaRequest(id);
+                return response.data;
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
         return (<HorarioContext.Provider value={{
-            CrearHorario,horarios, ListarHorarios, ListarHorario, ActualizarHorario, EliminarHorario
+            CrearHorario,horarios, ListarHorarios, ListarHorario, ActualizarHorario, EliminarHorario, HorariosPorDia
         }}>
         {children}</HorarioContext.Provider>)
     }

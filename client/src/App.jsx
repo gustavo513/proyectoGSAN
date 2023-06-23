@@ -5,6 +5,7 @@ import NotFound from './pages/NotFound.jsx';
 import NavBar from './components/NavBar.jsx';
 import Horarios from './pages/HorariosPages/Horarios.jsx';
 import Medicos from './pages/MedicosPages/Medicos.jsx';
+import HorariosMedicos from './pages/HorariosMedicosPages/HorariosMedicos.jsx';
 import { PrincipalContextProvider } from './context/PrincipalContext.jsx';
 import { CssBaseline } from '@mui/material'
 
@@ -28,6 +29,9 @@ function App() {
         <div>
           <PrincipalContextProvider>
             <Routes>
+              {/* Rutas De HorariosMedicos*/}
+              <Route path='/horariosMedicos' element={<HorariosMedicos />} />
+
 
               {/* Rutas De Medicos*/}
               <Route path='/medicos' element={<Medicos />} />

@@ -15,3 +15,7 @@ export const ListarMedicoRequest = async(id)=>{
 export const ActualizarMedicoRequest = async(id,newData)=>{
     return await axios.put(`http://localhost:4000/medicos/${id}`, newData);
 }
+
+export const MedicosPorEspecialidadRequest = async(id)=>{
+    return await axios.get(`http://localhost:4000/medicos/getmedicosbyespecialidadid/${id}`);
+}

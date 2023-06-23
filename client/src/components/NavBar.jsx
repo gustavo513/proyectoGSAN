@@ -49,13 +49,18 @@ function NavBar() {
     const [Options, setOptions] = useState('');
 
     const handleSelectedChange = (event) => {
-        setOptions(event.target.value)
+        const valor = setOptions(event.target.value)
+        
+        
         if (event.target.value === 'horario') {
             navigate('/horarios');
         } else if (event.target.value === 'medicos') {
             navigate('/medicos');
         } else if (event.target.value === 'especialidades') {
             navigate('/especialidades');
+        }
+        else if (event.target.value === 'h.medico') {
+            navigate('/horariosMedicos');
         }
     };
 
@@ -95,6 +100,7 @@ function NavBar() {
                                     <MenuItem value={'horario'}>Horarios</MenuItem>
                                     <MenuItem value={'medicos'}>Medicos</MenuItem>
                                     <MenuItem value={'especialidades'}>Especialidades</MenuItem>
+                                    <MenuItem value={'h.medico'}>H.Medico</MenuItem>
                                 </Select>
                             </FormControl>
                         </Box>

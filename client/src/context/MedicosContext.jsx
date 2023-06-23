@@ -3,6 +3,7 @@ import {
     ListarMedicosRequest,
     ListarMedicoRequest,
     ActualizarMedicoRequest,
+    MedicosPorEspecialidadRequest
 } from '../api/medico.api.js'
 import { useState, createContext, useContext } from 'react'
 
@@ -31,6 +32,15 @@ export const MedicosContextProvider = ({ children }) => {
     const ListarMedicos = async()=>{
         const response = await ListarMedicosRequest();
         setMedicos(response.data);
+    }
+
+    const MedicosPorEspecialidad = async(id)=>{
+        try {
+            const response = await MedicosPorEspecialidadRequest(id);
+            return response.data;
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     const CrearMedico = async(medico)=>{
@@ -64,7 +74,7 @@ export const MedicosContextProvider = ({ children }) => {
 
     return (
         <MedicosContext.Provider value={{
-            ListarMedicos, ListarMedico, CrearMedico, ActualizarMedico, medicos
+            ListarMedicos, ListarMedico, CrearMedico, ActualizarMedico, medicos, MedicosPorEspecialidad
         }}>{children}</MedicosContext.Provider>
     )
 }
