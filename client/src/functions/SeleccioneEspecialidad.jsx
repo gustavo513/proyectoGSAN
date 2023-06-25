@@ -7,7 +7,7 @@ function SeleccioneEspecialidad(especialidadId, especialidades) {
 
     if (especialidadFiltrada) {
         const descripcion = especialidadFiltrada.descripcion;
-        console.log(descripcion);
+        
         return descripcion;
     } else {
         console.log("Especialidad no encontrada");

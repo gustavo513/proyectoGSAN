@@ -1,5 +1,5 @@
 function CardSeleccioneHora({ horarios }) {
-    console.log(horarios);
+   
     return (
         horarios.map(horario => (
             <option key={horario.horarioId} value={horario.horarioId}>{horario.desde}  {horario.hasta}</option>

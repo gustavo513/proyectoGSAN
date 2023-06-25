@@ -9,8 +9,7 @@ import { useMedicos } from "../../context/MedicosContext";
 import CardSeleccionMedico from "../../components/CardSeleccionMedico";
 import { useHorario } from "../../context/HorarioContext";
 import CardSeleccioneHora from "../../components/CardSeleccioneHora";
-import SeleccioneEspecialidad from "../../functions/SeleccioneEspecialidad";
-import SeleccioneMedico from "../../functions/SeleccioneMedico";
+
 
 
 const Titulo = styled('div')({
@@ -61,6 +60,9 @@ function HorariosMedicosForm({ horariomedicoId, handleClose }) {
     const { HorariosPorDia } = useHorario();
     const [horarios, setHorarios] = useState([]);
 
+    const resetHorarioId = () => {
+        setHorarioMedico({ horarioId: '' });
+    }
 
     const resetForm = () => {
         setEspecialidadId('');
@@ -85,19 +87,22 @@ function HorariosMedicosForm({ horariomedicoId, handleClose }) {
         if (horariomedicoId) {
             const loadHorarioMedico = async () => {
                 const horario = await ListarHorarioMedico(horariomedicoId);
+                
                 setHorarioMedico({
                     medicoId: horario.medicoId,
-                    horarioId: horario.horarioId
+                    horarioId: horario.horarioId,
+                    desde: horario.desde,
+                    hasta: horario.hasta
                 });
             }
             loadHorarioMedico();
-        }
+        };
 
         CargarEspecialidades();
 
         ListarMedicos();
 
-        
+
 
     }, [HorariosPorDia, diaSeleccionado, ListarHorarioMedico, horariomedicoId]);
 
@@ -119,7 +124,8 @@ function HorariosMedicosForm({ horariomedicoId, handleClose }) {
         return <CardSeleccioneHora horarios={horarios} />
     }
 
-    console.log(horarioMedico);
+
+   
 
     return (
         <div>
@@ -132,14 +138,19 @@ function HorariosMedicosForm({ horariomedicoId, handleClose }) {
                 enableReinitialize={true}
                 onSubmit={async (values) => {
 
-                    console.log(values);
+
 
                     if (horariomedicoId) {
                         await ActualizarHorarioMedico(horariomedicoId, values);
                         handleClose();
-                        console.log(values);
+
+                        
                     } else {
                         await CrearHorarioMedico(values);
+                    }
+
+                    if (diaSeleccionado) {
+                        resetHorarioId();
                     }
 
 
@@ -150,6 +161,7 @@ function HorariosMedicosForm({ horariomedicoId, handleClose }) {
             >{({ handleChange, handleSubmit, values }) => (
                 <Form onSubmit={handleSubmit}>
                     <Formulario>
+
                         {!horariomedicoId && (
                             <label>Especialidad: </label>
                         )}
@@ -175,7 +187,7 @@ function HorariosMedicosForm({ horariomedicoId, handleClose }) {
                         )}
                         {horariomedicoId && (
                             <select name="medicoId" value={values.medicoId} onChange={handleChange}>
-                                <option initialvalue={values.medicoId}> {values.nombre} {values.apellido}</option>
+                                <option initialvalues={values.medicoId} > {values.nombre} {values.apellido}</option>
                                 {renderMedicos()}
                             </select>
                         )}
@@ -196,11 +208,32 @@ function HorariosMedicosForm({ horariomedicoId, handleClose }) {
 
 
 
+
+
                         <label>Horas Disponibles: </label>
-                        <select name="horarioId" value={values.horarioId} onChange={handleChange}>
-                            <option initialvalues=""></option>
-                            {renderHoras()}
-                        </select>
+                        {!horariomedicoId && (
+                            <select name="horarioId" value={values.horarioId} onChange={handleChange}>
+                                <option initialvalues=""></option>
+                                {renderHoras()}
+                            </select>
+                        )}
+
+
+                        {horariomedicoId && (
+                            <select name="horarioId" value={values.horarioId} onChange={handleChange}>
+                                {(!diaSeleccionado) && (
+                                    <option initialvalues={values.horarioId} hidden> {values.desde} {values.hasta}</option>
+                                )}
+                                {(diaSeleccionado) && (
+                                
+                                        <option initialvalues=""></option>
+                                        
+                                   
+                                )}
+
+                                {renderHoras()}
+                            </select>
+                        )}
 
                     </Formulario>
 

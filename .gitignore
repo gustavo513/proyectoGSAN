@@ -1,0 +1,4 @@
+#Ignora la carpeta node_modules, para cargar la dependencia que corresponde a node_modules,
+#se utiliza el comando git install en la terminal, ese lee el package.json y carga las 
+#dependencias creando la carpeta node_modules
+node_modules

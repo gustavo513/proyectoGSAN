@@ -41,7 +41,7 @@ export const HorarioMedicoContextProvider = ({ children }) => {
         try {
 
             const response = await ListarHorarioMedicoRequest(id);
-            return response.data;
+            return response.data[0];
 
         } catch (error) {
             console.error(error);
@@ -54,7 +54,7 @@ export const HorarioMedicoContextProvider = ({ children }) => {
     const CrearHorarioMedico = async (horario) => {
         try {
             const response = await CrearHorarioMedicoRequest(horario);
-            console.log(response.data);
+            
         } catch (error) {
             console.error(error);
         }
@@ -63,7 +63,7 @@ export const HorarioMedicoContextProvider = ({ children }) => {
     const ActualizarHorarioMedico = async (id, newData) => {
         try {
             const response = await ActualizarHorarioMedicoRequest(id, newData);
-            console.log(response.data);
+            
         } catch (error) {
             console.error(error);
         }
