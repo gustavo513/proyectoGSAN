@@ -33,7 +33,7 @@ const Formulario = styled('div')({
 
 
 
-function MedicosForm({ medicoId, handleCloseModal }) {
+function MedicosForm({ medicoId, handleCloseModal, handleClose }) {
 
     const { CargarEspecialidades, especialidades } = useEspecialidad();
     const { CrearMedico, ListarMedico, ActualizarMedico } = useMedicos();
@@ -218,7 +218,15 @@ function MedicosForm({ medicoId, handleCloseModal }) {
 
                             <Botones>
                                 <Button variant="contained" type="submit" color="success" >Guardar</Button>
-                                <Button type="button" variant="outlined" color="error" onClick={handleCloseModal} >Cancelar</Button>
+                                {!medicoId &&(
+                                    <Button type="button" variant="outlined" color="error" onClick={handleClose} >Cancelar</Button>
+                                )}
+                                {medicoId &&(
+                                    <Button type="button" variant="outlined" color="error" onClick={handleCloseModal} >Cancelar</Button>
+                                   
+                                )}
+                                
+
                             </Botones>
 
                         </Form>
