@@ -1,7 +1,7 @@
 import { estado } from '../functions/FuncionesEstado';
 import { Button, Modal, Box } from '@mui/material';
 import MedicosForm from '../pages/MedicosPages/MedicosForm';
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { useMedicos } from '../context/MedicosContext';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';

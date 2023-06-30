@@ -1,6 +1,6 @@
 import { useEspecialidad } from '../context/EspecialidadContext'
 import { estado } from '../functions/FuncionesEstado';
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import EspecialidadForm from '../pages/EspecialidadesPages/EspecialidadForm';
 import { Button, Modal, Box } from '@mui/material';
 import Paper from '@mui/material/Paper';

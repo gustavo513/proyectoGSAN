@@ -1,0 +1,17 @@
+Medico:
+	-D: disponible
+	-A: ausente
+	-I: inactivo
+
+Horarios:
+
+	-D: disponible
+	-I: inactivo
+	
+Especialidades:
+	
+	-D: disponible
+	-I: inactivo
+	
+	
+
