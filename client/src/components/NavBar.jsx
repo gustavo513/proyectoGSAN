@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import { styled } from '@mui/system';
 import { lightBlue } from "@mui/material/colors";
 import Box from '@mui/material/Box';
@@ -62,6 +62,14 @@ function NavBar() {
         else if (event.target.value === 'h.medico') {
             navigate('/horariosMedicos');
         }
+     else if (event.target.value === 'barrios') {
+        navigate('/barrios');
+    } else if (event.target.value === 'ciudades') {
+        navigate('/ciudades');
+    }
+    else if (event.target.value === 'pacientes') {
+        navigate('/pacientes');
+    }
     };
 
 
@@ -101,6 +109,9 @@ function NavBar() {
                                     <MenuItem value={'medicos'}>Medicos</MenuItem>
                                     <MenuItem value={'especialidades'}>Especialidades</MenuItem>
                                     <MenuItem value={'h.medico'}>H.Medico</MenuItem>
+                                    <MenuItem value={'barrios'}>Barrios</MenuItem>
+                                    <MenuItem value={'ciudades'}>Ciudades</MenuItem>
+                                    <MenuItem value={'pacientes'}>Pacientes</MenuItem>
                                 </Select>
                             </FormControl>
                         </Box>
