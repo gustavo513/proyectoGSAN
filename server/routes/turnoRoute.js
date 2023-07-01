@@ -2,6 +2,7 @@ import {Router} from 'express';
 import {
     getTurno,
     getTurnos,
+    getTurnosByEstado,
     createTurno,
     updateTurno,
     deleteTurno
@@ -14,6 +15,9 @@ router.get('/turnos/:id', getTurno);
 
 //listar todos los turnos
 router.get('/turnos', getTurnos);
+
+//listar todos los turnos con un estado especifico
+router.get('/turnos/getturnosbyestado/:estado', getTurnosByEstado);
 
 //registrar un turno
 router.post('/turnos', createTurno);
