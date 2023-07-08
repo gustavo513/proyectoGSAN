@@ -26,10 +26,11 @@ export const getHorariosMedicos = async(req, res) => {
     }
 }
 
-export const getHorariosMedicosByMedicoId = async(req, res) => {
+export const getHorariosMedicosByMedicoIdAndHorarioId = async(req, res) => {
     try{
         const medicoId = req.params.medicoId;
-        const [result] = await pool.query('SELECT horarioMedicoId, hm.medicoId, hm.horarioId, dia, desde, hasta, intervConsulta FROM horariosmedicos hm JOIN horarios h ON (hm.horarioId = h.horarioId) JOIN medicos m ON (hm.medicoId = m.medicoId) WHERE hm.medicoId = ?', [medicoId]);
+        const horarioId = req.params.horarioId;
+        const [result] = await pool.query('SELECT horarioMedicoId, hm.medicoId, hm.horarioId, dia, desde, hasta, intervConsulta FROM horariosmedicos hm JOIN horarios h ON (hm.horarioId = h.horarioId) JOIN medicos m ON (hm.medicoId = m.medicoId) WHERE hm.medicoId = ? AND hm.horarioId = ?', [medicoId, horarioId]);
         res.json(result);
     }
     catch(error){
