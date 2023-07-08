@@ -45,8 +45,7 @@ export const getTurnosByMedicoIdAndFecha = async(req, res) => {
         res.json(result);
     }
     catch(error){
-        fechaFormateada
-        //return res.status(500).json( {message: error.message} );
+        return res.status(500).json( {message: error.message} );
     }
 }
 
