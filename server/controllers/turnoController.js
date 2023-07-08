@@ -37,6 +37,19 @@ export const getTurnosByEstado = async(req, res) => {
     }
 }
 
+export const getTurnosByMedicoIdAndFecha = async(req, res) => {
+    try{
+        const medicoId = req.params.medicoId;
+        const fecha = req.params.fecha;
+        const [result] = await pool.query('SELECT hora, estado FROM turnos WHERE medicoId = ? AND fecha = ?', [medicoId, fecha]);
+        res.json(result);
+    }
+    catch(error){
+        fechaFormateada
+        //return res.status(500).json( {message: error.message} );
+    }
+}
+
 export const createTurno = async(req, res) => {
     try{
         const {fecha, hora, estado, total, pacienteid, medicoid, usuarioid} = req.body;

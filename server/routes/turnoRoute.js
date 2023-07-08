@@ -3,6 +3,7 @@ import {
     getTurno,
     getTurnos,
     getTurnosByEstado,
+    getTurnosByMedicoIdAndFecha,
     createTurno,
     updateTurno,
     deleteTurno
@@ -18,6 +19,9 @@ router.get('/turnos', getTurnos);
 
 //listar todos los turnos con un estado especifico
 router.get('/turnos/getturnosbyestado/:estado', getTurnosByEstado);
+
+//listar todos los turnos para un medico particular en una fecha especifica
+router.get('/turnos/getturnosbymedicoidandfecha/:medicoId/:fecha', getTurnosByMedicoIdAndFecha);
 
 //registrar un turno
 router.post('/turnos', createTurno);
