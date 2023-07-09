@@ -4,25 +4,25 @@
 
        
 
-        case 1:
+        case 0:
                 diaString = 'Domingo'
             break;
-        case 2:
+        case 1:
                 diaString = 'Lunes'
             break;
-        case 3:
+        case 2:
                 diaString = 'Martes'
             break;
-        case 4:
+        case 3:
                 diaString = 'Miercoles'
             break;
-        case 5:
+        case 4:
                 diaString = 'Jueves'
             break;
-        case 6:
+        case 5:
                 diaString = 'Viernes'
             break;
-        case 7:
+        case 6:
                 diaString = 'Sabado'
             break;
 

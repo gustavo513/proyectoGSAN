@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import  { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { styled } from '@mui/system';
 import { lightBlue } from "@mui/material/colors";
 import Box from '@mui/material/Box';
@@ -50,8 +50,8 @@ function NavBar() {
 
     const handleSelectedChange = (event) => {
         const valor = setOptions(event.target.value)
-        
-        
+
+
         if (event.target.value === 'horario') {
             navigate('/horarios');
         } else if (event.target.value === 'medicos') {
@@ -62,14 +62,17 @@ function NavBar() {
         else if (event.target.value === 'h.medico') {
             navigate('/horariosMedicos');
         }
-     else if (event.target.value === 'barrios') {
-        navigate('/barrios');
-    } else if (event.target.value === 'ciudades') {
-        navigate('/ciudades');
-    }
-    else if (event.target.value === 'pacientes') {
-        navigate('/pacientes');
-    }
+        else if (event.target.value === 'barrios') {
+            navigate('/barrios');
+        } else if (event.target.value === 'ciudades') {
+            navigate('/ciudades');
+        }
+        else if (event.target.value === 'pacientes') {
+            navigate('/pacientes');
+        }
+        else if (event.target.value === 'turnos') {
+            navigate('/turnos');
+        }
     };
 
 
@@ -112,6 +115,7 @@ function NavBar() {
                                     <MenuItem value={'barrios'}>Barrios</MenuItem>
                                     <MenuItem value={'ciudades'}>Ciudades</MenuItem>
                                     <MenuItem value={'pacientes'}>Pacientes</MenuItem>
+                                    <MenuItem value={'turnos'}>Turnos</MenuItem>
                                 </Select>
                             </FormControl>
                         </Box>
