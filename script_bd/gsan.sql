@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-07-2023 a las 03:13:36
+-- Tiempo de generación: 02-07-2023 a las 06:53:06
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.0.19
 
@@ -112,7 +112,8 @@ INSERT INTO `horarios` (`horarioId`, `dia`, `desde`, `hasta`, `estado`) VALUES
 (4, 6, '07:00:00', '15:00:00', 'I'),
 (5, 4, '07:00:00', '15:00:00', 'D'),
 (6, 5, '07:00:00', '15:00:00', 'D'),
-(7, 7, '07:00:00', '15:00:00', 'I');
+(7, 7, '07:00:00', '15:00:00', 'I'),
+(8, 3, '15:00:00', '23:00:00', 'D');
 
 -- --------------------------------------------------------
 
@@ -163,7 +164,8 @@ INSERT INTO `medicos` (`medicoId`, `nombre`, `apellido`, `ci`, `fechaNac`, `tele
 (1, 'Jorge', 'Rojas', '4531532', '1989-08-26', '0983125820', 'Gral. Bernardino Caballero - Pdte. Franco', 15, 'D', 2, 1),
 (7, 'Victor', 'Castro', '4343123', '1987-07-12', '0983152312', 'Av. Heroes del Chaco', 15, 'D', 2, 1),
 (11, 'Gustavo', 'Ortigoza Andino', '5300653', '2001-10-14', '0983115720', 'Barrio San Juan km 8 Acararay - Ciudad del Este', 15, 'A', 1, 1),
-(12, 'Gustavo', 'Andino', '5300654', '2001-10-14', '0983115720', 'Barrio San Juan km 8 Acararay - Ciudad del Este', 15, 'D', 2, 1);
+(12, 'Gustavo', 'Andino', '5300654', '2001-10-14', '0983115720', 'Barrio San Juan km 8 Acararay - Ciudad del Este', 15, 'D', 2, 1),
+(13, 'Juan', 'Rodriguez', '1234123', '1980-10-15', '0983522222', 'Barrio San Juan km 8 Acararay - Ciudad del Este', 15, 'D', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -193,7 +195,7 @@ CREATE TABLE `pacientes` (
 --
 
 INSERT INTO `pacientes` (`pacienteId`, `nombre`, `apellido`, `ci`, `fechaNac`, `sexo`, `sangre`, `barrioId`, `ciudadId`, `direccion`, `telefono`, `fechaReg`, `ultTurno`, `usuarioId`) VALUES
-(1, 'Juan', 'Perez', '5300653', '2001-10-14', 'M', 'RH', 1, 1, 'Calle Univesidad Nacional del Este - km 8 Acaray', '0983115720', '2023-05-07 04:00:00', '2023-07-01 01:12:22', 1),
+(1, 'Juan', 'Perez', '5300653', '2001-10-14', 'M', 'RH', 1, 1, 'Calle Univesidad Nacional del Este - km 8 Acaray', '0983115720', '2023-05-07 04:00:00', '2023-07-01 15:36:56', 1),
 (2, 'Maria', 'Ojeda', '5532532', '2003-06-07', 'F', 'A', 2, 1, 'Avenida Adrian Jara - Calle Boqueron', '0981532341', '2023-05-07 04:00:00', NULL, 1),
 (6, 'Benjamin', 'Abraham', '5312432', '2023-01-01', 'M', 'A', 1, 1, 'Calle Av. Peru', '0983115252', '2023-05-11 04:00:00', '2023-06-28 21:09:34', 1),
 (10, 'Gustavo', 'Ortigoza', '5304312', '2001-10-12', 'M', 'RH', 2, 1, 'Av. Proceres de Mayo', '534', '2023-06-07 17:31:34', NULL, 1);
@@ -207,7 +209,7 @@ INSERT INTO `pacientes` (`pacienteId`, `nombre`, `apellido`, `ci`, `fechaNac`, `
 CREATE TABLE `turnos` (
   `turnoId` int(11) NOT NULL,
   `fecha` date NOT NULL,
-  `hora` int(11) NOT NULL,
+  `hora` time NOT NULL,
   `estado` varchar(1) DEFAULT 'P',
   `total` int(11) NOT NULL,
   `fechaReg` timestamp NULL DEFAULT current_timestamp(),
@@ -221,9 +223,10 @@ CREATE TABLE `turnos` (
 --
 
 INSERT INTO `turnos` (`turnoId`, `fecha`, `hora`, `estado`, `total`, `fechaReg`, `pacienteId`, `medicoId`, `usuarioId`) VALUES
-(4, '2023-05-11', 4, 'C', 60000, '2023-05-13 13:45:16', 1, 1, 1),
-(5, '2023-06-30', 2, 'F', 60000, '2023-06-28 21:08:59', 6, 1, 1),
-(6, '2023-07-21', 2, 'P', 60000, '2023-07-01 01:12:22', 1, 7, 1);
+(4, '2023-05-11', '07:00:00', 'C', 60000, '2023-05-13 13:45:16', 1, 1, 1),
+(5, '2023-06-30', '07:30:00', 'F', 60000, '2023-06-28 21:08:59', 6, 1, 1),
+(6, '2023-07-21', '14:15:00', 'P', 60000, '2023-07-01 01:12:22', 1, 7, 1),
+(7, '2023-07-04', '12:00:00', 'P', 60000, '2023-07-01 15:36:56', 1, 7, 1);
 
 --
 -- Disparadores `turnos`
@@ -350,7 +353,7 @@ ALTER TABLE `especialidades`
 -- AUTO_INCREMENT de la tabla `horarios`
 --
 ALTER TABLE `horarios`
-  MODIFY `horarioId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `horarioId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `horariosmedicos`
@@ -362,7 +365,7 @@ ALTER TABLE `horariosmedicos`
 -- AUTO_INCREMENT de la tabla `medicos`
 --
 ALTER TABLE `medicos`
-  MODIFY `medicoId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `medicoId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `pacientes`
@@ -374,7 +377,7 @@ ALTER TABLE `pacientes`
 -- AUTO_INCREMENT de la tabla `turnos`
 --
 ALTER TABLE `turnos`
-  MODIFY `turnoId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `turnoId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
