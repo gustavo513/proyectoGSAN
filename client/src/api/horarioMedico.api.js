@@ -19,3 +19,7 @@ export const ActualizarHorarioMedicoRequest = async(id, newData) => {
 export const HorarioMedicoRequest = async(id) => {
     return await axios.get(`http://localhost:4000/horariosmedicos/gethorariosmedicosbymedicoid/${id}`);
 }
+
+export const HorarioPorMedicoIdYHorarioIdRequest = async(medicoId, horarioId) => {
+    return await axios.get(`http://localhost:4000/horariosmedicos/gethorariosmedicosbymedicoidandhorarioid/${medicoId}/${horarioId}`);
+}

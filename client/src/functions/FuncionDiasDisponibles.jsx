@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import {  useEffect } from "react";
 import { useHorarioMedico } from "../context/HorarioMedicoContext";
 import { useHorario } from "../context/HorarioContext";
 import { addDays, format, startOfMonth } from 'date-fns'

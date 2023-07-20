@@ -64,7 +64,7 @@ function BarriosForm({ handleClose, barrioId }) {
                     initialValues={barrios}
                     enableReinitialize={true}
                     onSubmit={async (values, actions) => {
-                        console.log(values);
+                        
                         if (barrioId) {
                             await actualizarBarrios(barrioId, values);
                             handleClose();
