@@ -3,7 +3,8 @@ import {
     ListarHorariosMedicosRequest,
     ListarHorarioMedicoRequest,
     ActualizarHorarioMedicoRequest,
-    HorarioMedicoRequest
+    HorarioMedicoRequest,
+    HorarioPorMedicoIdYHorarioIdRequest
 
 
 } from '../api/horarioMedico.api.js';
@@ -50,6 +51,15 @@ export const HorarioMedicoContextProvider = ({ children }) => {
 
     }
 
+    const HorarioPorMedicoIdYHorarioId = async(medicoId, horarioId) => {
+        try {
+            const response = await HorarioPorMedicoIdYHorarioIdRequest(medicoId, horarioId);
+            return response.data[0];
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
 
     const CrearHorarioMedico = async (horario) => {
         try {
@@ -75,7 +85,7 @@ export const HorarioMedicoContextProvider = ({ children }) => {
 
 
     return (<HorarioMedicoContext.Provider value={{
-        horariosMedicos, ListarHorariosMedicos, ListarHorarioMedico, CrearHorarioMedico, ActualizarHorarioMedico
+        horariosMedicos, ListarHorariosMedicos, ListarHorarioMedico, CrearHorarioMedico, ActualizarHorarioMedico, HorarioPorMedicoIdYHorarioId
     }}>
         {children}</HorarioMedicoContext.Provider>
 

@@ -196,13 +196,13 @@ function HorariosMedicosForm({ horariomedicoId, handleClose }) {
                         <label>Dia:</label>
                         <select name="dia" value={diaSeleccionado} onChange={handleDiaChange}>
                             <option initialvalues=""></option>
-                            <option value="1">Domingo</option>
-                            <option value="2">Lunes</option>
-                            <option value="3">Martes</option>
-                            <option value="4">Miercoles</option>
-                            <option value="5">Jueves</option>
-                            <option value="6">Viernes</option>
-                            <option value="7">Sabado</option>
+                            <option value="0">Domingo</option>
+                            <option value="1">Lunes</option>
+                            <option value="2">Martes</option>
+                            <option value="3">Miercoles</option>
+                            <option value="4">Jueves</option>
+                            <option value="5">Viernes</option>
+                            <option value="6">Sabado</option>
                         </select>
 
 

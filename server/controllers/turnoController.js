@@ -71,7 +71,7 @@ export const updateTurno = async(req, res) => {
     try{
         const id = req.params.id;
         const {fecha, hora, estado, total, pacienteid, medicoid, usuarioid} = req.body;
-        const result = await pool.query('UPDATE turnoid SET ? WHERE turnoid = ?', [ {fecha, hora, estado, total, pacienteid, medicoid, usuarioid}, id]);
+        const result = await pool.query('UPDATE turnos SET ? WHERE turnoId = ?', [ {fecha, hora, estado, total, pacienteid, medicoid, usuarioid}, id]);
         res.json(result);
     }
     catch(error){
