@@ -51,12 +51,11 @@ export const getTurnosByMedicoIdAndFecha = async(req, res) => {
 
 export const createTurno = async(req, res) => {
     try{
-        const {fecha, hora, estado, total, pacienteid, medicoid, usuarioid} = req.body;
-        const result = await pool.query('INSERT INTO turnos SET ?', {fecha:fecha, hora:hora, estado:estado, total:total, pacienteid:pacienteid, medicoid:medicoid, usuarioid:usuarioid});
+        const {fecha, hora, total, pacienteid, medicoid, usuarioid} = req.body;
+        const result = await pool.query('INSERT INTO turnos SET ?', {fecha:fecha, hora:hora, total:total, pacienteid:pacienteid, medicoid:medicoid, usuarioid:usuarioid});
         res.json({
             fecha,
             hora,
-            estado,
             total,
             pacienteid,
             medicoid,
