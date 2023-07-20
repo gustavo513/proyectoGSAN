@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-07-2023 a las 06:53:06
+-- Tiempo de generación: 20-07-2023 a las 19:42:51
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.0.19
 
@@ -112,8 +112,11 @@ INSERT INTO `horarios` (`horarioId`, `dia`, `desde`, `hasta`, `estado`) VALUES
 (4, 6, '07:00:00', '15:00:00', 'I'),
 (5, 4, '07:00:00', '15:00:00', 'D'),
 (6, 5, '07:00:00', '15:00:00', 'D'),
-(7, 7, '07:00:00', '15:00:00', 'I'),
-(8, 3, '15:00:00', '23:00:00', 'D');
+(7, 7, '07:00:00', '15:00:00', 'D'),
+(15, 4, '15:00:00', '23:00:00', 'D'),
+(16, 3, '07:00:00', '15:00:00', 'D'),
+(18, 0, '08:00:00', '15:00:00', 'D'),
+(19, 0, '07:00:00', '15:00:00', 'D');
 
 -- --------------------------------------------------------
 
@@ -153,7 +156,7 @@ CREATE TABLE `medicos` (
   `intervConsulta` int(11) DEFAULT NULL,
   `estado` varchar(1) DEFAULT 'D',
   `especialidadId` int(11) NOT NULL,
-  `usuarioId` int(11) NOT NULL
+  `usuarioId` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -195,7 +198,7 @@ CREATE TABLE `pacientes` (
 --
 
 INSERT INTO `pacientes` (`pacienteId`, `nombre`, `apellido`, `ci`, `fechaNac`, `sexo`, `sangre`, `barrioId`, `ciudadId`, `direccion`, `telefono`, `fechaReg`, `ultTurno`, `usuarioId`) VALUES
-(1, 'Juan', 'Perez', '5300653', '2001-10-14', 'M', 'RH', 1, 1, 'Calle Univesidad Nacional del Este - km 8 Acaray', '0983115720', '2023-05-07 04:00:00', '2023-07-01 15:36:56', 1),
+(1, 'Juan', 'Perez', '5300653', '2001-10-14', 'M', 'RH', 1, 1, 'Calle Univesidad Nacional del Este - km 8 Acaray', '0983115720', '2023-05-07 04:00:00', '2023-07-20 17:38:55', 1),
 (2, 'Maria', 'Ojeda', '5532532', '2003-06-07', 'F', 'A', 2, 1, 'Avenida Adrian Jara - Calle Boqueron', '0981532341', '2023-05-07 04:00:00', NULL, 1),
 (6, 'Benjamin', 'Abraham', '5312432', '2023-01-01', 'M', 'A', 1, 1, 'Calle Av. Peru', '0983115252', '2023-05-11 04:00:00', '2023-06-28 21:09:34', 1),
 (10, 'Gustavo', 'Ortigoza', '5304312', '2001-10-12', 'M', 'RH', 2, 1, 'Av. Proceres de Mayo', '534', '2023-06-07 17:31:34', NULL, 1);
@@ -215,7 +218,7 @@ CREATE TABLE `turnos` (
   `fechaReg` timestamp NULL DEFAULT current_timestamp(),
   `pacienteId` int(11) NOT NULL,
   `medicoId` int(11) NOT NULL,
-  `usuarioId` int(11) NOT NULL
+  `usuarioId` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -226,7 +229,12 @@ INSERT INTO `turnos` (`turnoId`, `fecha`, `hora`, `estado`, `total`, `fechaReg`,
 (4, '2023-05-11', '07:00:00', 'C', 60000, '2023-05-13 13:45:16', 1, 1, 1),
 (5, '2023-06-30', '07:30:00', 'F', 60000, '2023-06-28 21:08:59', 6, 1, 1),
 (6, '2023-07-21', '14:15:00', 'P', 60000, '2023-07-01 01:12:22', 1, 7, 1),
-(7, '2023-07-04', '12:00:00', 'P', 60000, '2023-07-01 15:36:56', 1, 7, 1);
+(7, '2023-07-04', '12:00:00', 'P', 60000, '2023-07-01 15:36:56', 1, 7, 1),
+(11, '0000-00-00', '07:00:00', 'P', 60000, '2023-07-18 00:06:57', 1, 1, 1),
+(12, '0000-00-00', '07:00:00', 'P', 60000, '2023-07-18 00:08:01', 1, 1, 1),
+(13, '0000-00-00', '07:00:00', 'P', 60000, '2023-07-18 00:36:55', 1, 1, 1),
+(14, '2023-07-18', '07:00:00', 'P', 60000, '2023-07-18 00:37:57', 1, 1, 1),
+(16, '2023-10-14', '13:38:00', 'P', 66, '2023-07-20 17:38:55', 1, 11, 1);
 
 --
 -- Disparadores `turnos`
@@ -353,7 +361,7 @@ ALTER TABLE `especialidades`
 -- AUTO_INCREMENT de la tabla `horarios`
 --
 ALTER TABLE `horarios`
-  MODIFY `horarioId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `horarioId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `horariosmedicos`
@@ -377,7 +385,7 @@ ALTER TABLE `pacientes`
 -- AUTO_INCREMENT de la tabla `turnos`
 --
 ALTER TABLE `turnos`
-  MODIFY `turnoId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `turnoId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
