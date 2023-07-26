@@ -46,21 +46,31 @@ export const getHorariosByDiaId = async(req, res) => {
     }
 }
 
-export const postHorario = async(req, res) => {
-    
-
+async function valRegDupHorarios(dia, desde, hasta) {
     try {
-        
-        const [resulado] = await pool.query('INSERT INTO horarios SET ?', [req.body]);
-        res.json(resulado);
-
-
+      const [resultado] = await pool.query('SELECT * FROM horarios WHERE dia = ? AND desde = ? AND hasta = ?', [dia, desde, hasta]);
+      return resultado.length > 0; // Devuelve true si hay registros duplicados o false si no hay registros
     } catch (error) {
-        return res.status(500).json( {message: error.message} );
+        return res.status(500).json( {message: error.message} )
     }
+  }
 
-
-}
+export const postHorario = async (req, res) => {
+    try {
+      const dia = req.body.dia;
+      const desde = req.body.desde;
+      const hasta = req.body.hasta;
+      if (await valRegDupHorarios(dia, desde, hasta)) {
+        res.json('ERROR: El registro ya existe...');
+      } else {
+        const [resultado] = await pool.query('INSERT INTO horarios SET ?', { dia, desde, hasta });
+        res.json(resultado);
+      }
+    } catch (error) {
+      return res.status(500).json({ message: error.message });
+    }
+  };
+  
 
 export const putHorario = async(req, res) => {
     try {
