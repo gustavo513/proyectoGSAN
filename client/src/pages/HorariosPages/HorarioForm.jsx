@@ -77,14 +77,20 @@ function HorarioForm({ horarioId, handleClose }) {
                 enableReinitialize={true}
                 onSubmit={async (values, actions) => {
 
-                    console.log(values);
+                    
 
                     if (horarioId) {
                         await ActualizarHorario(horarioId, values);
                         handleClose();
                     } else {
-                        await CrearHorario(values);
+                          await CrearHorario(values);
+                      
                     }
+
+                    
+                    
+                   
+
                     actions.resetForm();
                 }}
             >{({ handleChange, handleSubmit, values }) => (

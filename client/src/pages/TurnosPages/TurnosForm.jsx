@@ -52,7 +52,7 @@ function TurnosForm({ turnoId, handleClose }) {
     const { ListarPacientes, pacientes } = usePacientes();
     const [selectedDate, setSelectedDate] = useState(null);
 
-   
+    const [updateDate, setUpdateDate] = useState(null);
 
 
     const [formattedDate, setFormattedDate] = useState("");
@@ -117,8 +117,10 @@ function TurnosForm({ turnoId, handleClose }) {
                     usuarioid: response.usuarioId
 
                 });
-                
+                setMedicoElegido(response.medicoId);
                 setSelectedDate(date);
+                setFormattedDate(formattedDate);
+                
 
             }
 
@@ -154,7 +156,7 @@ function TurnosForm({ turnoId, handleClose }) {
         setEspecialidadId("");
     }
 
-
+    console.log(horaObjeto);
 
     console.log(horas);
 
@@ -212,31 +214,64 @@ function TurnosForm({ turnoId, handleClose }) {
 
 
                                 <label >Medico:</label>
-                                <select name="medicoid" value={values.medicoid} onChange={(e) => { handleChange(e), setMedicoElegido(e.target.value) }}>
-                                    <option initialvalues="" hidden></option>
-                                    {renderMedicos()}
-                                </select>
+                                {!turnoId && (
+
+
+                                    <select name="medicoid" value={values.medicoid} onChange={(e) => { handleChange(e), setMedicoElegido(e.target.value) }}>
+                                        <option initialvalues="" hidden></option>
+                                        {renderMedicos()}
+                                    </select>
+                                )}
+
+                                {turnoId && (
+
+
+
+                                    <select name="medicoid" value={values.medicoid} onChange={(e) => { handleChange(e), setMedicoElegido(e.target.value) }}>
+                                        <option initialvalues={values.medicoid} hidden></option>
+                                        {renderMedicos()}
+                                    </select>
+
+                                )}
 
 
 
 
                                 <label>Fecha:</label>
-                                <DatePicker
-                                    selected={selectedDate}
-                                    onChange={(e) => { handleChangeDate(e) }}
-                                    minDate={new Date()}
-                                    filterDate={isWeekday}
+                               
 
-                                />
+
+                                    <DatePicker
+                                        selected={selectedDate}
+                                        onChange={(e) => { handleChangeDate(e) }}
+                                        minDate={new Date()}
+                                        filterDate={isWeekday}
+
+                                    />
+                               
+
+                                
+
+
+                                   
+                               
                                 <input type="hidden" name="fecha" value={values.fecha} /> {/* Add this hidden input */}
 
                                 {/*<input type="date" name="fecha" value={values.fecha} onChange={(e) => { handleChange(e), setDate(e.target.value) }} />
                                 */}
                                 <label >Hora</label>
+                                {!turnoId &&(
                                 <select name="hora" value={values.hora} onChange={handleChange}>
                                     <option initialvalues="" hidden></option>
                                     {renderHoras()}
                                 </select>
+                                )}
+                                {turnoId &&(
+                                <select name="hora" value={values.hora} onChange={handleChange}>
+                                    <option initialvalues={values.hora} hidden></option>
+                                    {renderHoras()}
+                                </select>
+                                )}
                                 {/*
                                 <input type="time" name="hora" value={values.hora} onChange={handleChange} />
                                 */}
