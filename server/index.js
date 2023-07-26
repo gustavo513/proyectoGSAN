@@ -27,4 +27,4 @@ app.use(horariosMedicosRoute);
 app.use(especialidadesRoute);
 
 app.listen(PORT);
-console.log(`El servidor se esta ejecutando en el puerto ${PORT}`);
+console.log(`El servidor se esta ejecutando en el puerto http://localhost:${PORT}`);

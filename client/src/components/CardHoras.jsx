@@ -1,11 +1,14 @@
-import  { useEffect } from 'react';
+import { useEffect } from 'react';
 
-function CardHoras( horas ) {
-    console.log(horas);
+function CardHoras({ horas }) {
+
+
     return (
-        horas.map((hora, index) => (
-            <option key={index} value={hora}>{hora}</option>
-          ))
+        Array.isArray(horas) ? (
+            horas.map(hora => (
+                <option key={hora} value={hora}>{hora}</option>
+            ))
+        ) : null
     )
 }
 

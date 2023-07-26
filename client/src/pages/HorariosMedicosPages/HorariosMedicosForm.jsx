@@ -94,6 +94,9 @@ function HorariosMedicosForm({ horariomedicoId, handleClose }) {
                     desde: horario.desde,
                     hasta: horario.hasta
                 });
+
+                setDiaSeleccionado(horario.dia);
+
             }
             loadHorarioMedico();
         };

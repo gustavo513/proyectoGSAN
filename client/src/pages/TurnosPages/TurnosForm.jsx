@@ -9,8 +9,21 @@ import { styled } from "@mui/system";
 import CardSeleccionMedico from '../../components/CardSeleccionMedico';
 import CardAgendarPaciente from "../../components/CardAgendarPaciente";
 import CardSeleccionEspecialidad from '../../components/CardSeleccionEspecialidad';
+import CardHoras from "../../components/CardHoras";
+import moment from "moment";
+import DiasDisponibles from "../../functions/FuncionDiasDisponibles";
+import FuncionHoraPorDias from "../../functions/FuncionHoraPorDias";
+import FuncionArrayHoras from "../../functions/FuncionArrayHoras";
 
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
+//!Should solve the problem
+{/*const isWeekday = (date) => {
+  const disabledDays = [0, 6]; // Sunday (0) and Saturday (6) are disabled
+  const day = getDay(date);
+  return !disabledDays.includes(day);
+};*/}
 
 
 const Titulo = styled("div")({
@@ -29,6 +42,7 @@ const Botones = styled("div")({
 const Formulario = styled("div")({
     display: "grid",
     gridTemplateColumns: "1fr 1fr",
+    paddingBottom: "3%",
 
 });
 function TurnosForm({ turnoId, handleClose }) {
@@ -36,12 +50,40 @@ function TurnosForm({ turnoId, handleClose }) {
     const { CrearTurno, ListarTurno, ActualizarTurno } = useTurnos();
     const { ListarMedicos, medicos } = useMedicos();
     const { ListarPacientes, pacientes } = usePacientes();
+    const [selectedDate, setSelectedDate] = useState(null);
+
+   
+
+
+    const [formattedDate, setFormattedDate] = useState("");
+
+    const handleChangeDate = (date) => {
+        setSelectedDate(date);
+        const formattedDate = date.toLocaleDateString('en-CA');
+        setFormattedDate(formattedDate);
+    }
 
     const [especialidadId, setEspecialidadId] = useState('');
 
     const handleEspecialidadChange = (e) => {
         setEspecialidadId(e.target.value);
     }
+
+    const [medicoElegido, setMedicoElegido] = useState(null);
+
+    const desabilitar = DiasDisponibles(medicoElegido);
+    console.log(desabilitar);
+
+    const isWeekday = (date) => {
+
+        const day = date.getDay();
+        return !desabilitar.includes(day);
+    };
+
+
+    const horaObjeto = FuncionHoraPorDias(formattedDate, medicoElegido)
+    const horas = (horaObjeto !== undefined) ? FuncionArrayHoras(horaObjeto) : 'Espere';
+
 
     const [turno, setTurno] = useState({
         fecha: "",
@@ -64,8 +106,9 @@ function TurnosForm({ turnoId, handleClose }) {
                 const formattedDate = `${year}-${month
                     .toString()
                     .padStart(2, "0")}-${day.toString().padStart(2, "0")}`;
-                
+
                 setTurno({
+
                     fecha: formattedDate,
                     hora: response.hora,
                     total: response.total,
@@ -74,6 +117,8 @@ function TurnosForm({ turnoId, handleClose }) {
                     usuarioid: response.usuarioId
 
                 });
+                
+                setSelectedDate(date);
 
             }
 
@@ -100,9 +145,18 @@ function TurnosForm({ turnoId, handleClose }) {
         return <CardSeleccionEspecialidad especialidades={especialidades} />
     }
 
+    function renderHoras() {
+        if (horas === 'Espere') return <option value=''>No hay horas disponibles</option>
+        return <CardHoras horas={horas} />
+    }
+
     const resetEspecialidad = () => {
         setEspecialidadId("");
     }
+
+
+
+    console.log(horas);
 
     return (
         <div>
@@ -112,6 +166,8 @@ function TurnosForm({ turnoId, handleClose }) {
                     initialValues={turno}
                     enableReinitialize={true}
                     onSubmit={async (values, actions) => {
+
+                        values.fecha = formattedDate;
 
                         if (turnoId) {
                             await ActualizarTurno(turnoId, values);
@@ -153,17 +209,37 @@ function TurnosForm({ turnoId, handleClose }) {
 
                                 )}
 
+
+
                                 <label >Medico:</label>
-                                <select name="medicoid" value={values.medicoid} onChange={handleChange}>
+                                <select name="medicoid" value={values.medicoid} onChange={(e) => { handleChange(e), setMedicoElegido(e.target.value) }}>
                                     <option initialvalues="" hidden></option>
                                     {renderMedicos()}
                                 </select>
+
+
+
+
                                 <label>Fecha:</label>
-                                <input type="date" name="fecha" value={values.fecha} onChange={handleChange} />
+                                <DatePicker
+                                    selected={selectedDate}
+                                    onChange={(e) => { handleChangeDate(e) }}
+                                    minDate={new Date()}
+                                    filterDate={isWeekday}
 
+                                />
+                                <input type="hidden" name="fecha" value={values.fecha} /> {/* Add this hidden input */}
+
+                                {/*<input type="date" name="fecha" value={values.fecha} onChange={(e) => { handleChange(e), setDate(e.target.value) }} />
+                                */}
                                 <label >Hora</label>
+                                <select name="hora" value={values.hora} onChange={handleChange}>
+                                    <option initialvalues="" hidden></option>
+                                    {renderHoras()}
+                                </select>
+                                {/*
                                 <input type="time" name="hora" value={values.hora} onChange={handleChange} />
-
+                                */}
                                 <label >Total:</label>
                                 <input type="text" name="total" value={values.total} onChange={handleChange} />
 
