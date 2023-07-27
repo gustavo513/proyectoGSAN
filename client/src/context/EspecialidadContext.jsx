@@ -1,12 +1,12 @@
-import { 
-    crearEspecialidadRequest, 
-    listarEspecialidadRequest, 
-    especialidadRequest, 
+import {
+    crearEspecialidadRequest,
+    listarEspecialidadRequest,
+    especialidadRequest,
     actualizarEspecialidadRequest,
-    elminarEspecialidadRequest 
+    elminarEspecialidadRequest
 } from '../api/especialidad.api.js';
 import { createContext, useContext, useState } from 'react';
-
+import ErrorModal from "../mensajes/MENSAJES.jsx";
 export const EspecialidadContext = createContext();
 
 export const useEspecialidad = () => {
@@ -21,6 +21,9 @@ export const EspecialidadContextProvider = ({ children }) => {
 
     const [especialidades, setEspecialidad] = useState([]);
 
+    const [mensajes, setMensajes] = useState("");
+    const [mostrarAlerta, setMostrarAlerta] = useState(false);
+
     const CargarEspecialidades = async () => {
         try {
             const response = await listarEspecialidadRequest();
@@ -28,17 +31,24 @@ export const EspecialidadContextProvider = ({ children }) => {
         } catch (error) {
             console.error(error);
         }
-        
+
     }
 
 
     const CrearEspecialidad = async (especialidad) => {
         try {
             const response = await crearEspecialidadRequest(especialidad);
-            
-        } catch (error) {
+            setMensajes("Operacion realizada con exito.");
+            setMostrarAlerta(true);
+      
+            setTimeout(() => {
+              setMostrarAlerta(false);
+            }, 2000);
+      
+           
+          } catch (error) {
             console.error(error);
-        }
+          }
     }
 
     const ListaEspecialidad = async (id) => {
@@ -51,31 +61,43 @@ export const EspecialidadContextProvider = ({ children }) => {
     }
 
 
-    const actualizarEspecialidad = async(id, especialidad) => {
+    const actualizarEspecialidad = async (id, especialidad) => {
         try {
             const response = await actualizarEspecialidadRequest(id, especialidad);
-           
-        } catch (error) {
+            setMensajes(" Registro actualizado.");
+            setMostrarAlerta(true);
+      
+            setTimeout(() => {
+              setMostrarAlerta(false);
+            }, 2000);
+            
+          } catch (error) {
             console.error(error);
-        }
+          }
     }
 
 
-    const EliminarEspecialidad = async(id) => {
+    const EliminarEspecialidad = async (id) => {
         try {
-           await elminarEspecialidadRequest(id);
-           setEspecialidad(especialidades.filter(especialidad => especialidad.especialidadId !== id));
+            await elminarEspecialidadRequest(id);
+            setEspecialidad(especialidades.filter(especialidad => especialidad.especialidadId !== id));
         } catch (error) {
             console.error(error);
         }
     }
-    
 
-   
+
+
 
     return (
         <EspecialidadContext.Provider value={{
             CrearEspecialidad, CargarEspecialidades, especialidades, ListaEspecialidad, actualizarEspecialidad, EliminarEspecialidad
-        }}>{children}</EspecialidadContext.Provider>
+        }}>
+        <ErrorModal
+        isOpen={mostrarAlerta}
+        onRequestClose={() =>setMostrarAlerta(false)}
+        errorMessage={mensajes}
+      />
+        {children}</EspecialidadContext.Provider>
     )
 }

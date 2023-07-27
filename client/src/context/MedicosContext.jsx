@@ -7,7 +7,7 @@ import {
 } from '../api/medico.api.js'
 import { useState, createContext, useContext } from 'react'
 
-
+import ErrorModal from "../mensajes/MENSAJES.jsx";
 
 export const MedicosContext = createContext();
 
@@ -25,16 +25,19 @@ export const useMedicos = () => {
 
 
 export const MedicosContextProvider = ({ children }) => {
-    
+
     const [medicos, setMedicos] = (useState([]));
+   
+    const [mensajes, setMensajes] = useState("");
+    const [mostrarAlerta, setMostrarAlerta] = useState(false);
 
 
-    const ListarMedicos = async()=>{
+    const ListarMedicos = async () => {
         const response = await ListarMedicosRequest();
         setMedicos(response.data);
     }
 
-    const MedicosPorEspecialidad = async(id)=>{
+    const MedicosPorEspecialidad = async (id) => {
         try {
             const response = await MedicosPorEspecialidadRequest(id);
             return response.data;
@@ -43,39 +46,57 @@ export const MedicosContextProvider = ({ children }) => {
         }
     }
 
-    const CrearMedico = async(medico)=>{
+    const CrearMedico = async (medico) => {
         try {
             const response = await CrearMedicoRequest(medico);
-         
-        } catch (error) {
+            setMensajes(" Operacion realizada con exito!");
+            setMostrarAlerta(true);
+      
+            setTimeout(() => {
+              setMostrarAlerta(false);
+            }, 2000);
+            
+          } catch (error) {
             console.error(error);
-        }
+          }
     }
 
-    const ListarMedico = async(id)=>{
+    const ListarMedico = async (id) => {
         try {
             const response = await ListarMedicoRequest(id);
             return response.data[0];
         } catch (error) {
             console.error(error);
         }
-            
+
     }
 
-    const ActualizarMedico = async(id, newData)=>{
+    const ActualizarMedico = async (id, newData) => {
         try {
             const response = await ActualizarMedicoRequest(id, newData);
-          
-        } catch (error) {
+            setMensajes(" Operacion realizada con exito!");
+            setMostrarAlerta(true);
+      
+            setTimeout(() => {
+              setMostrarAlerta(false);
+            }, 2000);
+            
+          } catch (error) {
             console.error(error);
-        }
+          }
     }
 
 
     return (
         <MedicosContext.Provider value={{
             ListarMedicos, ListarMedico, CrearMedico, ActualizarMedico, medicos, MedicosPorEspecialidad
-        }}>{children}</MedicosContext.Provider>
+        }}>
+             <ErrorModal
+        isOpen={mostrarAlerta}
+        onRequestClose={() =>setMostrarAlerta(false)}
+        errorMessage={mensajes}
+      />
+            {children}</MedicosContext.Provider>
     )
 }
 

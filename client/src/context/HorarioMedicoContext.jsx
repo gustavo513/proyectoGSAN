@@ -10,7 +10,7 @@ import {
 } from '../api/horarioMedico.api.js';
 
 import { createContext, useContext, useState } from 'react';
-
+import ErrorModal from "../mensajes/MENSAJES.jsx";
 export const HorarioMedicoContext = createContext();
 
 export const useHorarioMedico = () => {
@@ -25,6 +25,10 @@ export const HorarioMedicoContextProvider = ({ children }) => {
 
 
     const [horariosMedicos, setHorariosMedicos] = useState([]);
+
+    const [mensajes, setMensajes] = useState("");
+    const [mostrarAlerta, setMostrarAlerta] = useState(false);
+
 
 
     const ListarHorariosMedicos = async () => {
@@ -51,7 +55,7 @@ export const HorarioMedicoContextProvider = ({ children }) => {
 
     }
 
-    const HorarioPorMedicoIdYHorarioId = async(medicoId, horarioId) => {
+    const HorarioPorMedicoIdYHorarioId = async (medicoId, horarioId) => {
         try {
             const response = await HorarioPorMedicoIdYHorarioIdRequest(medicoId, horarioId);
             return response.data[0];
@@ -64,7 +68,13 @@ export const HorarioMedicoContextProvider = ({ children }) => {
     const CrearHorarioMedico = async (horario) => {
         try {
             const response = await CrearHorarioMedicoRequest(horario);
-            
+            setMensajes("Operacion realizada con exito!");
+            setMostrarAlerta(true);
+
+            setTimeout(() => {
+                setMostrarAlerta(false);
+            }, 2000);
+
         } catch (error) {
             console.error(error);
         }
@@ -73,7 +83,11 @@ export const HorarioMedicoContextProvider = ({ children }) => {
     const ActualizarHorarioMedico = async (id, newData) => {
         try {
             const response = await ActualizarHorarioMedicoRequest(id, newData);
-            
+            setMensajes("Registro actualizado Correctamente");
+            setMostrarAlerta(true);
+            setTimeout(() => {
+                setMostrarAlerta(false);
+            }, 2000);
         } catch (error) {
             console.error(error);
         }
@@ -87,6 +101,11 @@ export const HorarioMedicoContextProvider = ({ children }) => {
     return (<HorarioMedicoContext.Provider value={{
         horariosMedicos, ListarHorariosMedicos, ListarHorarioMedico, CrearHorarioMedico, ActualizarHorarioMedico, HorarioPorMedicoIdYHorarioId
     }}>
+        <ErrorModal
+        isOpen={mostrarAlerta}
+        onRequestClose={() => setMostrarAlerta(false)}
+        errorMessage={mensajes}
+      />
         {children}</HorarioMedicoContext.Provider>
 
     )
