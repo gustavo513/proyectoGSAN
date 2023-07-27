@@ -60,7 +60,7 @@ function EspecialidadForm({ handleClose, especialidadId }) {
                     initialValues={especialidad}
                     enableReinitialize={true}
                     onSubmit={async (values, actions) => {
-                        console.log(values);
+                        
                         if (especialidadId) {
                             await actualizarEspecialidad(especialidadId, values);
                             handleClose();

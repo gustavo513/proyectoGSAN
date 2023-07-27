@@ -60,7 +60,7 @@ function CiudadForm({ handleClose, ciudadId }) {
                     initialValues={Ciudad}
                     enableReinitialize={true}
                     onSubmit={async (values, actions) => {
-                        console.log(values);
+                        
                         if (ciudadId) {
                             await actualizarCiudad(ciudadId, values);
                             handleClose();
