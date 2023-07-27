@@ -38,6 +38,7 @@ export const getHorariosMedicosByMedicoIdAndHorarioId = async(req, res) => {
     }
 }
 
+
 export const createHorarioMedico = async(req, res) => {
     try{
         const {horarioId, medicoId} = req.body;
