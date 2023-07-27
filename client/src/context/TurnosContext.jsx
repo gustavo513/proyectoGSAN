@@ -8,7 +8,7 @@ import {
 } from '../api/turnos.api.js';
 
 import { createContext, useContext, useState } from 'react';
-
+import ErrorModal from "../mensajes/MENSAJES.jsx";
 export const TurnosContext = createContext();
 
 export const useTurnos = () => {
@@ -23,6 +23,9 @@ export const useTurnos = () => {
 export const TurnosContextProvider = ({ children }) => {
 
     const [turnos, setTurnos] = useState([]);
+
+    const [mensajes, setMensajes] = useState("");
+    const [mostrarAlerta, setMostrarAlerta] = useState(false);
 
     const ListarTurnos = async () => {
         try {
@@ -42,10 +45,10 @@ export const TurnosContextProvider = ({ children }) => {
         }
     }
 
-    const ListarTurnosPorEstado = async(estado) => {
+    const ListarTurnosPorEstado = async (estado) => {
         try {
             const response = await ListarTurnosPorEstadoRequest(estado);
-            setTurnos (response.data);
+            setTurnos(response.data);
         } catch (error) {
             console.error(error);
         }
@@ -54,7 +57,12 @@ export const TurnosContextProvider = ({ children }) => {
     const CrearTurno = async (turno) => {
         try {
             const response = await CrearTurnoRequest(turno);
-            
+            setMensajes("Operacion realizada con exito!");
+            setMostrarAlerta(true);
+
+            setTimeout(() => {
+                setMostrarAlerta(false);
+            }, 2000);
         } catch (error) {
             console.error(error);
         }
@@ -63,16 +71,27 @@ export const TurnosContextProvider = ({ children }) => {
     const ActualizarTurno = async (id, newData) => {
         try {
             const response = await ActualizarTurnoRequest(id, newData);
-            
+            setMensajes("Registro actualizado!");
+            setMostrarAlerta(true);
+
+            setTimeout(() => {
+                setMostrarAlerta(false);
+            }, 2000);
         } catch (error) {
             console.error(error);
         }
     }
-    
 
-    return(<TurnosContext.Provider value={{
-        turnos,ListarTurnos,ListarTurno,ListarTurnosPorEstado,CrearTurno,ActualizarTurno
-    }}>{children}</TurnosContext.Provider>
+
+    return (<TurnosContext.Provider value={{
+        turnos, ListarTurnos, ListarTurno, ListarTurnosPorEstado, CrearTurno, ActualizarTurno
+    }}>
+        <ErrorModal
+            isOpen={mostrarAlerta}
+            onRequestClose={() => setMostrarAlerta(false)}
+            errorMessage={mensajes}
+        />
+        {children}</TurnosContext.Provider>
 
     )
 }

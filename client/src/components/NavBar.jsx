@@ -111,7 +111,7 @@ function NavBar() {
                                     <MenuItem value={'horario'}>Horarios</MenuItem>
                                     <MenuItem value={'medicos'}>Medicos</MenuItem>
                                     <MenuItem value={'especialidades'}>Especialidades</MenuItem>
-                                    <MenuItem value={'h.medico'}>H.Medico</MenuItem>
+                                    <MenuItem value={'h.medico'}>Hra.Medico</MenuItem>
                                     <MenuItem value={'barrios'}>Barrios</MenuItem>
                                     <MenuItem value={'ciudades'}>Ciudades</MenuItem>
                                     <MenuItem value={'pacientes'}>Pacientes</MenuItem>

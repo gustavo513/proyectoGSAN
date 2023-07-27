@@ -6,7 +6,7 @@ import {
     actualizarCiudadRequest
 } from '../api/ciudad.api.js';
 import { createContext, useContext, useState } from 'react';
-
+import ErrorModal from "../mensajes/MENSAJES.jsx";
 export const CiudadContext = createContext();
 
 export const useCiudad = () => {
@@ -20,7 +20,8 @@ export const useCiudad = () => {
 export const CiudadContextProvider = ({ children }) => {
 
     const [Ciudad, setCiudad] = useState([]);
-
+  const [modalAbrir, setModalAbrir] = useState(false);
+  const [mensajes, setMensajes] = useState('');
     const CargarCiudad = async () => {
         try {
             const response = await listarCiudadRequest();
@@ -35,10 +36,15 @@ export const CiudadContextProvider = ({ children }) => {
     const CrearCiudad = async (Ciudad) => {
         try {
             const response = await crearCiudadRequest(Ciudad);
+            setMensajes("Operacion Realizado con exito!");
+            setModalAbrir(true);
+            setTimeout(() => {
+              setModalAbrir(false);
+            }, 2000);
             
-        } catch (error) {
+          } catch (error) {
             console.error(error);
-        }
+          }
     }
 
     const ListaCiudad = async (id) => {
@@ -54,10 +60,16 @@ export const CiudadContextProvider = ({ children }) => {
     const actualizarCiudad = async(id, Ciudad) => {
         try {
             const response = await actualizarCiudadRequest(id, Ciudad);
-            
-        } catch (error) {
+            setMensajes(" Actulizado con exito!");
+            setModalAbrir(true);
+      
+            setTimeout(() => {
+              setModalAbrir(false);
+            }, 1000);
+           
+          } catch (error) {
             console.error(error);
-        }
+          }
     }
 
 
@@ -76,6 +88,12 @@ export const CiudadContextProvider = ({ children }) => {
     return (
         <CiudadContext.Provider value={{
             CrearCiudad, CargarCiudad, Ciudad, ListaCiudad, actualizarCiudad, EliminarCiudad
-        }}>{children}</CiudadContext.Provider>
+        }}>
+         <ErrorModal
+        isOpen={modalAbrir}
+        onRequestClose={() =>setModalAbrir(false)}
+        errorMessage={mensajes}
+      />
+        {children}</CiudadContext.Provider>
     )
 }
