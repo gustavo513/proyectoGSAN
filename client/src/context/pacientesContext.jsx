@@ -5,7 +5,7 @@ import {
     ActualizarPacientesRequest,
 } from '../api/pacientes.js'
 import { useState, createContext, useContext } from 'react'
-
+import ErrorModal from '../mensajes/MENSAJES.jsx';
 
 
 export const PacientesContext = createContext();
@@ -24,7 +24,8 @@ export const usePacientes = () => {
 
 
 export const PacientesContextProvider = ({ children }) => {
-    
+    const [modalAbrir, setModalAbrir]= useState(false)
+    const [mensajes, setMensajes] = useState('');
     const [pacientes, setPacientes] = (useState([]));
 
 
@@ -36,6 +37,8 @@ export const PacientesContextProvider = ({ children }) => {
     const CrearPacientes = async(pacientes)=>{
         try {
             const response = await CrearPacientesRequest(pacientes);
+            setMensajes('Operacion exitosa!')
+            setModalAbrir(true)
             console.log(response.data);
         } catch (error) {
             console.error(error);
@@ -55,6 +58,9 @@ export const PacientesContextProvider = ({ children }) => {
     const ActualizarPacientes = async(id, newData)=>{
         try {
             const response = await ActualizarPacientesRequest(id, newData);
+            setMensajes('Registro actulizado!');
+            setModalAbrir(true)
+            
             console.log(response.data);
         } catch (error) {
             console.error(error);
@@ -65,7 +71,15 @@ export const PacientesContextProvider = ({ children }) => {
     return (
         <PacientesContext.Provider value={{
             ListarPacientes, ListarPaciente, CrearPacientes, ActualizarPacientes, pacientes
-        }}>{children}</PacientesContext.Provider>
+        }}>
+            <ErrorModal
+            isOpen={modalAbrir}
+            onRequestClose={()=>setModalAbrir(false)}
+            errorMessage={mensajes}
+            />
+            {children}
+            
+            </PacientesContext.Provider>
     )
 }
 

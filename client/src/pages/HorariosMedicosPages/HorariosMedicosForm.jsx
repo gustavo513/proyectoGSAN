@@ -54,7 +54,9 @@ function HorariosMedicosForm({ horariomedicoId, handleClose }) {
     const [diaSeleccionado, setDiaSeleccionado] = useState('');
 
     const handleDiaChange = (e) => {
-        setDiaSeleccionado(e.target.value);
+        const selectedDay = e.target.value;
+  setDiaSeleccionado(selectedDay);
+  console.log(selectedDay)
     }
 
     const { HorariosPorDia } = useHorario();
@@ -203,6 +205,7 @@ function HorariosMedicosForm({ horariomedicoId, handleClose }) {
                             <option value="4">Jueves</option>
                             <option value="5">Viernes</option>
                             <option value="6">Sabado</option>
+                           
                         </select>
 
 

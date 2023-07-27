@@ -94,37 +94,9 @@ function NavBar() {
                     <Link style={{ textDecoration: 'none', color: 'white' }} to={'/'}>HOME</Link>
                 </div>
 
-                <div>
-                    <Paginas>
 
 
-                        <Box sx={{ minWidth: 120, backgroundColor: "lightgray" }}>
-                            <FormControl fullWidth>
-                                <InputLabel id="demo-simple-select-label">Page</InputLabel>
-                                <Select
-                                    labelId="demo-simple-select-label"
-                                    id="demo-simple-select"
-                                    value={Options}
-                                    label="Page"
-                                    onChange={handleSelectedChange}
-                                >
-                                    <MenuItem value={'horario'}>Horarios</MenuItem>
-                                    <MenuItem value={'medicos'}>Medicos</MenuItem>
-                                    <MenuItem value={'especialidades'}>Especialidades</MenuItem>
-                                    <MenuItem value={'h.medico'}>H.Medico</MenuItem>
-                                    <MenuItem value={'barrios'}>Barrios</MenuItem>
-                                    <MenuItem value={'ciudades'}>Ciudades</MenuItem>
-                                    <MenuItem value={'pacientes'}>Pacientes</MenuItem>
-                                    <MenuItem value={'turnos'}>Turnos</MenuItem>
-                                </Select>
-                            </FormControl>
-                        </Box>
-
-
-
-
-                    </Paginas>
-                </div>
+                      
             </HomeLink>
 
         </Navegacion>

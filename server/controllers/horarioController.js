@@ -61,7 +61,7 @@ export const postHorario = async (req, res) => {
       const desde = req.body.desde;
       const hasta = req.body.hasta;
       if (await valRegDupHorarios(dia, desde, hasta)) {
-        res.json('ERROR: El registro ya existe...');
+        return res.status(400).json({ error: 'El registro ya existe...' });
       } else {
         const [resultado] = await pool.query('INSERT INTO horarios SET ?', { dia, desde, hasta });
         res.json(resultado);
