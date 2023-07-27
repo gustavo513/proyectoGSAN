@@ -114,10 +114,10 @@ function MedicosForm({ medicoId, handleCloseModal, handleClose }) {
                     initialValues={medicos}
                     enableReinitialize={true}
                     onSubmit={async (values, actions) => {
-                        console.log(values);
+                        
                         if (medicoId) {
                             await ActualizarMedico(medicoId, values);
-                            console.log(values);
+                            
                             handleCloseModal();
 
                         } else {

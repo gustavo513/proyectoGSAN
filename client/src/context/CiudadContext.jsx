@@ -35,7 +35,7 @@ export const CiudadContextProvider = ({ children }) => {
     const CrearCiudad = async (Ciudad) => {
         try {
             const response = await crearCiudadRequest(Ciudad);
-            console.log(response);
+            
         } catch (error) {
             console.error(error);
         }
@@ -54,7 +54,7 @@ export const CiudadContextProvider = ({ children }) => {
     const actualizarCiudad = async(id, Ciudad) => {
         try {
             const response = await actualizarCiudadRequest(id, Ciudad);
-            console.log(response.data);
+            
         } catch (error) {
             console.error(error);
         }

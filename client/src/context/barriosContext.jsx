@@ -36,7 +36,7 @@ export const BarriosContextProvider = ({ children }) => {
     const CrearBarrios = async (barrios) => {
         try {
             const response = await crearBarrioRequest(barrios);
-            console.log(response);
+            
         } catch (error) {
             console.error(error);
         }
@@ -57,7 +57,7 @@ export const BarriosContextProvider = ({ children }) => {
     const actualizarBarrios = async(id, barrio) => {
         try {
             const response = await actualizarBarrioRequest(id, barrio);
-            console.log(response.data);
+            
         } catch (error) {
             console.error(error);
         }

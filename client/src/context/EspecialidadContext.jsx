@@ -35,7 +35,7 @@ export const EspecialidadContextProvider = ({ children }) => {
     const CrearEspecialidad = async (especialidad) => {
         try {
             const response = await crearEspecialidadRequest(especialidad);
-            console.log(response);
+            
         } catch (error) {
             console.error(error);
         }
@@ -54,7 +54,7 @@ export const EspecialidadContextProvider = ({ children }) => {
     const actualizarEspecialidad = async(id, especialidad) => {
         try {
             const response = await actualizarEspecialidadRequest(id, especialidad);
-            console.log(response.data);
+           
         } catch (error) {
             console.error(error);
         }

@@ -36,7 +36,7 @@ export const PacientesContextProvider = ({ children }) => {
     const CrearPacientes = async(pacientes)=>{
         try {
             const response = await CrearPacientesRequest(pacientes);
-            console.log(response.data);
+            
         } catch (error) {
             console.error(error);
         }
@@ -55,7 +55,7 @@ export const PacientesContextProvider = ({ children }) => {
     const ActualizarPacientes = async(id, newData)=>{
         try {
             const response = await ActualizarPacientesRequest(id, newData);
-            console.log(response.data);
+           
         } catch (error) {
             console.error(error);
         }

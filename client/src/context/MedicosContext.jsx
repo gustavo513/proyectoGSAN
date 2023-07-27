@@ -46,7 +46,7 @@ export const MedicosContextProvider = ({ children }) => {
     const CrearMedico = async(medico)=>{
         try {
             const response = await CrearMedicoRequest(medico);
-            console.log(response.data);
+         
         } catch (error) {
             console.error(error);
         }
@@ -65,7 +65,7 @@ export const MedicosContextProvider = ({ children }) => {
     const ActualizarMedico = async(id, newData)=>{
         try {
             const response = await ActualizarMedicoRequest(id, newData);
-            console.log(response.data);
+          
         } catch (error) {
             console.error(error);
         }

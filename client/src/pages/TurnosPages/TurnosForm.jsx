@@ -9,8 +9,24 @@ import { styled } from "@mui/system";
 import CardSeleccionMedico from '../../components/CardSeleccionMedico';
 import CardAgendarPaciente from "../../components/CardAgendarPaciente";
 import CardSeleccionEspecialidad from '../../components/CardSeleccionEspecialidad';
+import CardHoras from "../../components/CardHoras";
+import moment from "moment";
+import DiasDisponibles from "../../functions/FuncionDiasDisponibles";
+import FuncionHoraPorDias from "../../functions/FuncionHoraPorDias";
+import FuncionArrayHoras from "../../functions/FuncionArrayHoras";
 
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+
+//!Should solve the problem
+{/*const isWeekday = (date) => {
+  const disabledDays = [0, 6]; // Sunday (0) and Saturday (6) are disabled
+  const day = getDay(date);
+  return !disabledDays.includes(day);
+};*/}
 
 
 const Titulo = styled("div")({
@@ -29,18 +45,58 @@ const Botones = styled("div")({
 const Formulario = styled("div")({
     display: "grid",
     gridTemplateColumns: "1fr 1fr",
+    paddingBottom: "3%",
 
 });
+
+
+
 function TurnosForm({ turnoId, handleClose }) {
     const { CargarEspecialidades, especialidades } = useEspecialidad();
     const { CrearTurno, ListarTurno, ActualizarTurno } = useTurnos();
     const { ListarMedicos, medicos } = useMedicos();
     const { ListarPacientes, pacientes } = usePacientes();
+    const [selectedDate, setSelectedDate] = useState(null);
+
+
+
+
+    const [formattedDate, setFormattedDate] = useState("");
+
+    const handleChangeDate = (date) => {
+        setSelectedDate(date);
+        const formattedDate = date.toLocaleDateString('en-CA');
+        setFormattedDate(formattedDate);
+    }
 
     const [especialidadId, setEspecialidadId] = useState('');
 
     const handleEspecialidadChange = (e) => {
-        setEspecialidadId(e.target.value);
+        setEspecialidadId(e);
+    }
+
+    const [medicoElegido, setMedicoElegido] = useState(null);
+
+    const desabilitar = DiasDisponibles(medicoElegido);
+    
+
+    const isWeekday = (date) => {
+
+        const day = date.getDay();
+        return !desabilitar.includes(day);
+    };
+
+
+    const horaObjeto = FuncionHoraPorDias(formattedDate, medicoElegido)
+    const horas = (horaObjeto !== undefined) ? FuncionArrayHoras(horaObjeto) : 'Espere';
+
+    const [ciElegido, setCiElegido] = useState(null);
+
+
+    const handleCiChange = (value) => {
+        const ciMod = value;
+        const val = ciMod.label;
+        setCiElegido(val);
     }
 
     const [turno, setTurno] = useState({
@@ -64,16 +120,22 @@ function TurnosForm({ turnoId, handleClose }) {
                 const formattedDate = `${year}-${month
                     .toString()
                     .padStart(2, "0")}-${day.toString().padStart(2, "0")}`;
-                
+
                 setTurno({
+
                     fecha: formattedDate,
                     hora: response.hora,
                     total: response.total,
                     pacienteid: response.pacienteId,
                     medicoid: response.medicoId,
-                    usuarioid: response.usuarioId
+                    usuarioid: response.usuarioId,
+                    estado: response.estado
 
                 });
+                setMedicoElegido(response.medicoId);
+                setSelectedDate(date);
+                setFormattedDate(formattedDate);
+
 
             }
 
@@ -92,7 +154,7 @@ function TurnosForm({ turnoId, handleClose }) {
     }
     function renderPacientes() {
         if (pacientes.length === 0) return <option value={""}> No hay pacientes </option>
-        return < CardAgendarPaciente pacientes={pacientes} />
+        return < CardAgendarPaciente pacientes={pacientes} cedula={ciElegido} />
     }
 
     function renderEspecialidades() {
@@ -100,9 +162,29 @@ function TurnosForm({ turnoId, handleClose }) {
         return <CardSeleccionEspecialidad especialidades={especialidades} />
     }
 
+    function renderHoras() {
+        if (horas === 'Espere') return <option value=''>No hay horas disponibles</option>
+        return <CardHoras horas={horas} />
+    }
+
     const resetEspecialidad = () => {
         setEspecialidadId("");
     }
+
+    let pacientesCI;
+    if (pacientes.length > 0) {
+        pacientesCI = pacientes.map(paciente => paciente.ci);
+
+    }
+
+    let dicCI = [];
+    if (pacientesCI !== undefined) {
+        dicCI = pacientesCI.map((ci => ({ label: ci })));
+    }
+
+
+
+
 
     return (
         <div>
@@ -112,6 +194,9 @@ function TurnosForm({ turnoId, handleClose }) {
                     initialValues={turno}
                     enableReinitialize={true}
                     onSubmit={async (values, actions) => {
+
+                        values.fecha = formattedDate;
+                        
 
                         if (turnoId) {
                             await ActualizarTurno(turnoId, values);
@@ -130,19 +215,44 @@ function TurnosForm({ turnoId, handleClose }) {
                         <Form onSubmit={handleSubmit}>
 
                             <Formulario>
+                                {!turnoId && (
+                                    
+                               
+                                <label>C.I.:</label>
+                                )}
+                                 {!turnoId && (
+                                <Autocomplete
+                                    disablePortal
+                                    id="combo-box-demo"
+                                    options={dicCI}
+                                    getOptionLabel={(option) => option.label}
+                                    onChange={(e, value) => { handleCiChange(value) }}
+                                    isOptionEqualToValue={(option, value) => option.label === value.label}
+                                    renderInput={(params) => <TextField {...params} label="CI" />}
+                                />
+                                )}
+
+                                {!turnoId && (
+                                    
+                               
                                 <label >Paciente:</label>
+                                )}
+                                {!turnoId && (
                                 <select name="pacienteid" value={values.pacienteid} onChange={handleChange}>
                                     <option initialvalues="" hidden></option>
                                     {renderPacientes()}
                                 </select>
+                                )}
+
 
                                 {!turnoId && (
-
-
                                     <label>Especialidad: </label>
                                 )}
+
                                 {!turnoId && (
-                                    <select name="especialidadId" value={especialidadId} onChange={handleEspecialidadChange} >
+
+
+                                    <select name="especialidadId" value={especialidadId} onChange={(e) => handleEspecialidadChange(e.target.value)} >
                                         <option initialvalues="" ></option>
                                         {
                                             renderEspecialidades()
@@ -150,23 +260,88 @@ function TurnosForm({ turnoId, handleClose }) {
                                         }
 
                                     </select>
+                                )}
+
+
+
+                                <label >Medico:</label>
+                                {!turnoId && (
+
+
+                                    <select name="medicoid" value={values.medicoid} onChange={(e) => { handleChange(e), setMedicoElegido(e.target.value) }}>
+                                        <option initialvalues="" hidden></option>
+                                        {renderMedicos()}
+                                    </select>
+                                )}
+
+                                {turnoId && (
+
+
+
+                                    <select name="medicoid" value={values.medicoid} onChange={(e) => { handleChange(e), setMedicoElegido(e.target.value) }}>
+                                        <option initialvalues={values.medicoid} hidden></option>
+                                        {renderMedicos()}
+                                    </select>
 
                                 )}
 
-                                <label >Medico:</label>
-                                <select name="medicoid" value={values.medicoid} onChange={handleChange}>
-                                    <option initialvalues="" hidden></option>
-                                    {renderMedicos()}
-                                </select>
+
+
+
                                 <label>Fecha:</label>
-                                <input type="date" name="fecha" value={values.fecha} onChange={handleChange} />
 
+
+
+                                <DatePicker
+                                    selected={selectedDate}
+                                    onChange={(e) => { handleChangeDate(e) }}
+                                    minDate={new Date()}
+                                    filterDate={isWeekday}
+                                   
+                                />
+
+
+
+
+
+
+
+                                <input type="hidden" name="fecha" value={values.fecha} /> {/* Add this hidden input */}
+
+                                {/*<input type="date" name="fecha" value={values.fecha} onChange={(e) => { handleChange(e), setDate(e.target.value) }} />
+                                */}
                                 <label >Hora</label>
+                                {!turnoId && (
+                                    <select name="hora" value={values.hora} onChange={handleChange}>
+                                        <option initialvalues="" hidden></option>
+                                        {renderHoras()}
+                                    </select>
+                                )}
+                                {turnoId && (
+                                    <select name="hora" value={values.hora} onChange={handleChange}>
+                                        <option initialvalues={values.hora} hidden></option>
+                                        {renderHoras()}
+                                    </select>
+                                )}
+                                {/*
                                 <input type="time" name="hora" value={values.hora} onChange={handleChange} />
-
+                                */}
                                 <label >Total:</label>
                                 <input type="text" name="total" value={values.total} onChange={handleChange} />
-
+                                
+                                {turnoId &&(
+                                    <label>Estado:</label>
+                                )}
+                                {turnoId &&(
+                                    <select type="text" name="estado" value={values.estado} onChange={handleChange}>
+                                        <option initialvalues={values.estado} hidden></option>
+                                        <option value="P">Pendiente</option>
+                                        <option value="C">Confirmado</option>
+                                        <option value="A">Ausente</option>
+                                        <option value="S">Suspendido</option>
+                                        <option value="F">Finalizado</option>
+                                    </select>
+                                )}
 
                                 <label >Usuario:</label>
                                 <select name="usuarioid" value={values.usuarioid} onChange={handleChange}>

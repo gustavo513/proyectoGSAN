@@ -34,7 +34,10 @@ import { createContext, useContext, useState } from 'react';
         const CrearHorario = async(horario)=>{
             try {
                 const response = await CrearHorarioRequest(horario);
-                console.log(response.data);
+                if(response.data === 'ERROR: El registro ya existe...'){
+                    window.alert(response.data);
+                }
+                
             } catch (error) {
                 console.error(error);
             }
@@ -56,7 +59,7 @@ import { createContext, useContext, useState } from 'react';
         const ActualizarHorario = async(id, newData)=>{
             try {
                 const response =  await ActualizarHorarioRequest(id, newData);
-                console.log(response.data);
+                
             } catch (error) {
                 console.error(error);
             }

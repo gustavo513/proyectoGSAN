@@ -1,7 +1,10 @@
-function CardAgendarPaciente({ pacientes }) {
+function CardAgendarPaciente({ pacientes, cedula }) {
+    
+    const pacienteElegido = pacientes.filter(paciente => paciente.ci === cedula);
+    
     return (
-        pacientes.map((paciente) => (
-            <option key={paciente.pacienteid} value={paciente.pacienteid}>
+        pacienteElegido.map((paciente) => (
+            <option key={paciente.pacienteid} value={paciente.pacienteid} >
                 {paciente.nombre} {paciente.apellido}
             </option>
         ))
