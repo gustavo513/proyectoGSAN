@@ -121,7 +121,7 @@ function CardHorariosMedicos({horariosmedicos}) {
                                         <TableCell align="center" >
                                             <Espaciado>
                                                 <Button variant="contained" onClick={() => handleOpenModal(horariomedico.horariomedicoid)}>Editar</Button>
-                                                <Button variant="outlined" color="error" >Borrar</Button>
+                                               
                                             </Espaciado>
                                         </TableCell>
                                     </TableRow>

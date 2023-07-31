@@ -113,7 +113,7 @@ function CardMedicos({ medicos }) {
                                         <TableCell align="center">
                                             <Espaciado>
                                                 <Button variant='contained' onClick={() => handleOpenModal(medico.medicoId)}>Editar</Button>
-                                                <Button variant="outlined" color="error" >Borrar</Button>
+                                               
                                             </Espaciado>
                                         </TableCell>
                                     </TableRow>

@@ -99,7 +99,7 @@ function CardCiudad({ ciudad }) {
                                         <TableCell align="center">
                                             <Espaciado>
                                                 <Button variant='contained' onClick={() => handleOpenModal(Ciudad.ciudadId)}>Editar</Button>
-                                                <Button variant="outlined" color="error" onClick={() => EliminarCiudad(Ciudad.barrioId)}>Borrar</Button>
+                                               
                                             </Espaciado>
                                         </TableCell>
                                     </TableRow>

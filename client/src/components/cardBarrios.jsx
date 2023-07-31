@@ -100,7 +100,7 @@ function CardBarrios({ barrio }) {
                                         <TableCell align="center">
                                             <Espaciado>
                                                 <Button variant='contained' onClick={() => handleOpenModal(barrios.barrioId)}>Editar</Button>
-                                                <Button variant="outlined" color="error" onClick={() => EliminarBarrios(barrios.barrioId)}>Borrar</Button>
+                                                
                                             </Espaciado>
                                         </TableCell>
                                     </TableRow>

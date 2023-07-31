@@ -117,7 +117,7 @@ function CardTurnos({ turnos }) {
                                         <TableCell align="center" >
                                             <Espaciado>
                                                 <Button variant="contained" onClick={() => handleOpenModal(turno.turnoId)}>Editar</Button>
-                                                <Button variant="outlined" color="error" onClick={() => EliminarHorario(turno.turnoId)}>Borrar</Button>
+                                               
                                             </Espaciado>
                                         </TableCell>
                                     </TableRow>

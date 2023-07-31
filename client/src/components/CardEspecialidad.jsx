@@ -103,7 +103,7 @@ function CardEspecialidad({ especialidades }) {
                                         <TableCell align="center">
                                             <Espaciado>
                                                 <Button variant='contained' onClick={() => handleOpenModal(especialidad.especialidadId)}>Editar</Button>
-                                                <Button variant="outlined" color="error" onClick={() => EliminarEspecialidad(especialidad.especialidadId)}>Borrar</Button>
+                                               
                                             </Espaciado>
                                         </TableCell>
                                     </TableRow>

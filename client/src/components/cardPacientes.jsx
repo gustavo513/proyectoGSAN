@@ -154,7 +154,7 @@ function CardPacientes({ pacientes }) {
                                         <TableCell align="center">
                                             <Espaciado>
                                                 <Button variant='contained' onClick={() => handleOpenModal(paciente.pacienteid)}>Editar</Button>
-                                                <Button variant="outlined" color="error" >Borrar</Button>
+                                                
                                                 <IconButton sx={ iconColor} onClick={() => handleIconSelect(1, paciente.pacienteid)}>
                                                     <AddCircleIcon />
                                                 </IconButton>
